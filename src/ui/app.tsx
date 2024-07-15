@@ -1,38 +1,49 @@
 import React, { useEffect, useRef, useState } from "@rbxts/react";
 import { Sidebar } from "./components/sidebar";
+import { Navbar, NAVBAR_HEIGHT } from "./components/navbar";
+import { useRem } from "./hooks/use-rem";
+import { Toolbar } from "./components/toolbar";
+import { SettingsWidget } from "./components/settings-widget";
 
 export function App() {
+	const rem = useRem();
 	const rootFrameRef = useRef<Frame | undefined>();
-	const [enabled, setEnabled]= useState(false);
-
-	print("Rendering App");
-
-	useEffect(() => {
-		print("Mounted app");
-	}, []);
 
 	useEffect(() => {
 		let sizeChangeConnection: RBXScriptConnection | undefined;
 
-		print(rootFrameRef.current);
-
 		if (rootFrameRef.current) {
 			sizeChangeConnection = rootFrameRef.current.GetPropertyChangedSignal("AbsoluteSize").Connect(() => {
-				print("The size is:", rootFrameRef.current?.AbsoluteSize);
-			})
+				// print("The size is:", rootFrameRef.current?.AbsoluteSize);
+			});
 		}
 
 		return () => {
 			if (sizeChangeConnection) {
 				sizeChangeConnection.Disconnect();
 			}
-		}
-	}, [enabled]);
+		};
+	}, []);
 
 	return (
-		<frame ref={rootFrameRef} Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={1}>
-			<Sidebar />
-			<textbutton Size={new UDim2(0, 200, 0, 50)} BackgroundTransparency={0} Text={enabled ? "Enabled" : "Disabled"} Event={{ MouseButton1Click: () => setEnabled(!enabled) }}></textbutton>
+		<frame
+			ref={rootFrameRef}
+			Size={new UDim2(1, 0, 1, 0)}
+			BackgroundColor3={Color3.fromRGB(46, 46, 46)}
+			BackgroundTransparency={0}
+			BorderSizePixel={0}
+		>
+			<Navbar />
+			<frame
+				Size={new UDim2(1, 0, 1, -rem(NAVBAR_HEIGHT))}
+				Position={new UDim2(0, 0, 0, rem(NAVBAR_HEIGHT))}
+				BackgroundTransparency={1}
+				ClipsDescendants={true}
+			>
+				<Sidebar />
+				<Toolbar />
+				<SettingsWidget />
+			</frame>
 		</frame>
 	);
 }

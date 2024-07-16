@@ -31,11 +31,13 @@ export function Toggle({ title, valueUpdated }: props) {
 				TextSize={rem(6)}
 				TextColor3={new Color3(1, 1, 1)}
 				BackgroundTransparency={1}
+				ZIndex={4}
 			/>
 			<imagebutton
 				AnchorPoint={new Vector2(1, 0.5)}
 				Position={new UDim2(1, 0, 0.5, 0)}
 				Size={new UDim2(0, rem(15), 1, -rem(2))}
+				ZIndex={4}
 				BackgroundColor3={animationGoal.map((x) =>
 					Color3.fromRGB(190, 190, 190).Lerp(Color3.fromRGB(33, 144, 255), x),
 				)}
@@ -51,6 +53,7 @@ export function Toggle({ title, valueUpdated }: props) {
 					Position={animationGoal.map((x) => new UDim2(x, 0, 0.5, 0))}
 					BackgroundTransparency={0}
 					BackgroundColor3={Color3.fromRGB(255, 255, 255)}
+					ZIndex={4}
 				>
 					<Rounded cornerRadius={new UDim(1, 0)} />
 				</frame>

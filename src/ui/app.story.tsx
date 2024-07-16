@@ -1,8 +1,10 @@
-import React from "@rbxts/react";
+import React, { useEffect, useRef, useState } from "@rbxts/react";
 import ReactRoblox from "@rbxts/react-roblox";
 import { RootProvider } from "./providers/root-provider";
 import { App } from "./app";
 import { producer } from "store";
+import { clearSizeListener, createSizeListener } from "./util/size-listener";
+import { StoryWrapper } from "./story-wrapper";
 
 const story = {
 	summary: "App",
@@ -10,11 +12,9 @@ const story = {
 	reactRoblox: ReactRoblox,
 	story: () => {
 		return (
-			<frame BorderSizePixel={0} Size={new UDim2(0, 700, 0, 400)}>
-				<RootProvider>
-					<App />
-				</RootProvider>
-			</frame>
+			<StoryWrapper>
+				<App />
+			</StoryWrapper>
 		);
 	},
 	cleanup: () => {

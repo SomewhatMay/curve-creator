@@ -6,6 +6,7 @@ export interface RemProviderProps extends React.PropsWithChildren {
 	remOverride?: number;
 	minimumRem?: number;
 	maximumRem?: number;
+	rootSize: Vector2;
 }
 
 export const DEFAULT_REM = 1;
@@ -21,12 +22,12 @@ export function RemProvider({
 	maximumRem = math.huge,
 	remOverride,
 	children,
+	rootSize,
 }: RemProviderProps) {
-	const camera = useCamera();
 	const [rem, setRem] = useDebounceState(baseRem, { wait: 0.2, leading: true });
 
 	const update = () => {
-		const viewport = camera.ViewportSize;
+		const viewport = rootSize;
 
 		if (remOverride !== undefined) {
 			return remOverride;
@@ -43,11 +44,9 @@ export function RemProvider({
 		setRem(math.clamp(math.round(baseRem * factor), minimumRem, maximumRem));
 	};
 
-	useEventListener(camera.GetPropertyChangedSignal("ViewportSize"), update);
-
 	useEffect(() => {
 		update();
-	}, [baseRem, minimumRem, maximumRem, remOverride]);
+	}, [rootSize, baseRem, minimumRem, maximumRem, remOverride]);
 
 	return <RemContext.Provider value={rem}>{children}</RemContext.Provider>;
 }

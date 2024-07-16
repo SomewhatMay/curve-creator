@@ -37,6 +37,7 @@ export function SidebarToggle() {
 				MouseEnter: () => setHover(new Spring(1)),
 				MouseLeave: () => setHover(new Spring(0)),
 			}}
+			ZIndex={11}
 		>
 			<imagebutton
 				AnchorPoint={new Vector2(0.5, 0.5)}
@@ -47,6 +48,7 @@ export function SidebarToggle() {
 				BackgroundTransparency={1}
 				ImageTransparency={open.map((x) => x)}
 				Event={{ MouseButton1Click: handleClick }}
+				ZIndex={12}
 			/>
 			<imagebutton
 				AnchorPoint={new Vector2(0.5, 0.5)}
@@ -57,6 +59,7 @@ export function SidebarToggle() {
 				BackgroundTransparency={1}
 				ImageTransparency={open.map((x) => 1 - x)}
 				Event={{ MouseButton1Click: handleClick }}
+				ZIndex={13}
 			/>
 			<uipadding
 				PaddingBottom={new UDim(0, rem(1))}

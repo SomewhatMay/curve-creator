@@ -55,7 +55,7 @@ export function SettingsWidget() {
 			ZIndex={4}
 		>
 			{settingsOptions.map((option) => (
-				<frame Size={new UDim2(1, 0, 0, rem(10))} BackgroundTransparency={1}>
+				<frame Size={new UDim2(1, 0, 0, rem(10))} BackgroundTransparency={1} ZIndex={4}>
 					<option.component
 						{...option.props}
 						title={option.title}

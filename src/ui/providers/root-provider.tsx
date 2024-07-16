@@ -3,6 +3,14 @@ import { RemProvider } from "./rem-provider";
 import { ReflexProvider } from "@rbxts/react-reflex";
 import { producer } from "store";
 
-export function RootProvider({ children }: React.PropsWithChildren) {
-	return <RemProvider><ReflexProvider producer={producer}>{children}</ReflexProvider></RemProvider>;
+interface props extends React.PropsWithChildren {
+	rootSize: Vector2;
+}
+
+export function RootProvider({ rootSize, children }: props) {
+	return (
+		<RemProvider rootSize={rootSize}>
+			<ReflexProvider producer={producer}>{children}</ReflexProvider>
+		</RemProvider>
+	);
 }

@@ -22,6 +22,7 @@ export function SettingsTextBox({ title, text, valueUpdated }: props) {
 				TextSize={rem(6)}
 				TextColor3={new Color3(1, 1, 1)}
 				BackgroundTransparency={1}
+				ZIndex={4}
 			/>
 			<textbox
 				PlaceholderText={text}
@@ -34,6 +35,7 @@ export function SettingsTextBox({ title, text, valueUpdated }: props) {
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
 				BackgroundColor3={Color3.fromRGB(38, 38, 38)}
 				TextXAlignment={Enum.TextXAlignment.Center}
+				ZIndex={4}
 				Event={{
 					FocusLost: (rbx, enterPressed) => valueUpdated(rbx, enterPressed),
 				}}

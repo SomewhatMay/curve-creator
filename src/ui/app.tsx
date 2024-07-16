@@ -9,27 +9,9 @@ import { FullPadding } from "./components/full-padding";
 
 export function App() {
 	const rem = useRem();
-	const rootFrameRef = useRef<Frame | undefined>();
-
-	useEffect(() => {
-		let sizeChangeConnection: RBXScriptConnection | undefined;
-
-		if (rootFrameRef.current) {
-			sizeChangeConnection = rootFrameRef.current.GetPropertyChangedSignal("AbsoluteSize").Connect(() => {
-				// print("The size is:", rootFrameRef.current?.AbsoluteSize);
-			});
-		}
-
-		return () => {
-			if (sizeChangeConnection) {
-				sizeChangeConnection.Disconnect();
-			}
-		};
-	}, []);
 
 	return (
 		<frame
-			ref={rootFrameRef}
 			Size={new UDim2(1, 0, 1, 0)}
 			BackgroundColor3={Color3.fromRGB(46, 46, 46)}
 			BackgroundTransparency={0}

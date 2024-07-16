@@ -68,11 +68,13 @@ export function Sidebar() {
 					TextColor3={new Color3(0.65, 0.65, 0.65)}
 					TextScaled={true}
 					TextXAlignment={Enum.TextXAlignment.Left}
+					ZIndex={10}
 				/>
 				<frame
 					Size={new UDim2(1, 0, 1, -rem(12))}
 					BackgroundTransparency={1}
 					Position={new UDim2(0, 0, 0, rem(12))}
+					ZIndex={10}
 				>
 					{sidebarOptions.map((option, index) => (
 						<SidebarButton key={option.title} option={option} index={index} />

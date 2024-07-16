@@ -25,6 +25,7 @@ export function Navbar() {
 				TextScaled={true}
 				FontFace={Font.fromEnum(Enum.Font.GothamBold)}
 				TextXAlignment={Enum.TextXAlignment.Left}
+				ZIndex={11}
 			/>
 		</frame>
 	);

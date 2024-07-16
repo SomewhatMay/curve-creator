@@ -5,6 +5,9 @@ import { Rounded } from "../rounded";
 const STEP = 0.1;
 const trueStep = STEP / (STEP + 1);
 
+export { STEP as XAxisSTEP };
+export { trueStep as XAxisTrueSTEP };
+
 export function XAxis() {
 	const rem = useRem();
 

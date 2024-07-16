@@ -5,6 +5,9 @@ import { Rounded } from "../rounded";
 const STEP = 0.1;
 const trueStep = STEP / (STEP + 1);
 
+export { STEP as YAxisSTEP };
+export { trueStep as YAxisTrueSTEP };
+
 export function YAxis() {
 	const rem = useRem();
 

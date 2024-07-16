@@ -5,6 +5,7 @@ import { SidebarButton } from "./sidebar-button";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
+import { useRootProducer } from "store";
 
 export type SidebarOption = {
 	title: string;
@@ -40,6 +41,7 @@ export function Sidebar() {
 	const rem = useRem();
 	const [open, setOpen] = useMotor(0);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
+	const { setSidebarVisible } = useRootProducer();
 
 	useEffect(() => {
 		if (sidebarVisible) {
@@ -84,7 +86,18 @@ export function Sidebar() {
 				BackgroundTransparency={open.map((x) => (1 - x) * 0.3 + 0.7)}
 				BackgroundColor3={Color3.fromRGB(0, 0, 0)}
 				ZIndex={9}
-			/>
+			>
+				<imagebutton
+					Size={new UDim2(1, 0, 1, 0)}
+					Position={new UDim2(0, 0, 0, 0)}
+					BackgroundTransparency={1}
+					AutoButtonColor={false}
+					Visible={sidebarVisible}
+					Event={{
+						MouseButton1Click: () => setSidebarVisible(false),
+					}}
+				/>
+			</frame>
 		</>
 	);
 }

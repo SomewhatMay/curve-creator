@@ -15,16 +15,25 @@ export function SettingsTextBox({ title, text, valueUpdated }: props) {
 		<>
 			<textlabel
 				Text={title}
-				Size={new UDim2(1, 0, 1, 0)}
+				Size={new UDim2(0.45, -rem(3), 1, 0)}
+				Position={new UDim2(0, rem(3), 0, 0)}
 				TextXAlignment={Enum.TextXAlignment.Left}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
 				TextSize={rem(6)}
+				TextColor3={new Color3(1, 1, 1)}
+				BackgroundTransparency={1}
 			/>
 			<textbox
 				PlaceholderText={text}
 				TextSize={rem(6)}
-				Size={new UDim2(1, 0, 0, rem(10))}
+				Text={text}
+				AnchorPoint={new Vector2(1, 0.5)}
+				TextColor3={new Color3(1, 1, 1)}
+				Position={new UDim2(1, 0, 0.5, 0)}
+				Size={new UDim2(0.35, 0, 1, 0)}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
+				BackgroundColor3={Color3.fromRGB(38, 38, 38)}
+				TextXAlignment={Enum.TextXAlignment.Center}
 				Event={{
 					FocusLost: (rbx, enterPressed) => valueUpdated(rbx, enterPressed),
 				}}

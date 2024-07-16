@@ -12,10 +12,12 @@ export function SidebarToggle() {
 
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const { setSidebarVisible } = useRootProducer();
+	const { setSettingsVisible } = useRootProducer();
 
 	useEffect(() => {
 		if (sidebarVisible) {
 			setOpen(new Spring(1));
+			setSettingsVisible(false);
 		} else {
 			setOpen(new Spring(0));
 		}

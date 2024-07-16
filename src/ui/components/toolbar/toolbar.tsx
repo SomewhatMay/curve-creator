@@ -1,34 +1,46 @@
-import React, { useBinding, useEffect } from "@rbxts/react";
+import React, { useBinding, useEffect, useMemo } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { FullPadding } from "../full-padding";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectChanged, selectFileName, selectFileOpened } from "store/io-slice";
 import { TextService } from "@rbxts/services";
 import { ToolbarButton } from "./toolbar-button";
+import { useRootProducer } from "store";
+import { selectSettingsVisible } from "store/settings-slice";
+
+export const TOOLBAR_HEIGHT = 12;
 
 export type ToolbarOption = {
 	icon: string;
 	tooltip: string;
+	handler: () => void;
 };
-
-const toolbarOptions: ToolbarOption[] = [
-	{
-		icon: "http://www.roblox.com/asset/?id=6953989178", // graph icon: http://www.roblox.com/asset/?id=4460062809
-		tooltip: "Open settings",
-	},
-	{
-		icon: "http://www.roblox.com/asset/?id=18247708237", // graph icon: http://www.roblox.com/asset/?id=4460062809
-		tooltip: "Open in table view",
-	},
-];
 
 export function Toolbar() {
 	const rem = useRem();
+	const { setSettingsVisible } = useRootProducer();
+	const settingsVisible = useSelector(selectSettingsVisible);
 	const fileOpened = useSelector(selectFileOpened);
 	const fileName = useSelector(selectFileName);
 	const fileChanged = useSelector(selectChanged);
 	const [fileNameSize, setFileNameSize] = useBinding(0);
 	let displayName = fileOpened ? fileName : "No file open";
+
+	const toolbarOptions: ToolbarOption[] = useMemo(
+		() => [
+			{
+				icon: "http://www.roblox.com/asset/?id=6953989178", // graph icon: http://www.roblox.com/asset/?id=4460062809
+				tooltip: "Open settings",
+				handler: () => setSettingsVisible(!settingsVisible),
+			},
+			{
+				icon: "http://www.roblox.com/asset/?id=18247708237", // graph icon: http://www.roblox.com/asset/?id=4460062809
+				tooltip: "Open in table view",
+				handler: () => {},
+			},
+		],
+		[settingsVisible, setSettingsVisible],
+	);
 
 	useEffect(() => {
 		setFileNameSize(
@@ -37,7 +49,7 @@ export function Toolbar() {
 	}, [rem, displayName]);
 
 	return (
-		<frame Size={new UDim2(1, 0, 0, rem(12))} BackgroundTransparency={1}>
+		<frame Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT))} BackgroundTransparency={1}>
 			<textlabel
 				Size={new UDim2(1, 0, 0, rem(10))}
 				TextSize={rem(6)}
@@ -63,7 +75,14 @@ export function Toolbar() {
 
 			<frame Size={new UDim2(0.5, 0, 0, rem(10))} Position={new UDim2(0.5, 0, 0, 0)} BackgroundTransparency={1}>
 				{toolbarOptions.map((option) => {
-					return <ToolbarButton key={option.tooltip} tooltip={option.tooltip} icon={option.icon} />;
+					return (
+						<ToolbarButton
+							key={option.tooltip}
+							handler={option.handler}
+							tooltip={option.tooltip}
+							icon={option.icon}
+						/>
+					);
 				})}
 
 				<uilistlayout

@@ -4,7 +4,7 @@ import { useRem } from "ui/hooks/use-rem";
 import { FullPadding } from "../full-padding";
 import { Rounded } from "../rounded";
 
-export function ToolbarButton({ tooltip, icon }: ToolbarOption) {
+export function ToolbarButton({ tooltip, handler, icon }: ToolbarOption) {
 	const rem = useRem();
 
 	return (
@@ -12,6 +12,9 @@ export function ToolbarButton({ tooltip, icon }: ToolbarOption) {
 			Size={new UDim2(0, rem(12), 0, rem(12))}
 			BackgroundTransparency={0}
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
+			Event={{
+				MouseButton1Click: handler,
+			}}
 		>
 			<imagelabel
 				Image={icon}

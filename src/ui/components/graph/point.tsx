@@ -12,7 +12,7 @@ export function Point({ x, y }: props) {
 	return (
 		<frame
 			Position={new UDim2(x, 0, 1 - y, 0)}
-			Size={new UDim2(0, rem(2), 0, rem(2))}
+			Size={new UDim2(0, rem(4), 0, rem(4))}
 			BackgroundTransparency={0}
 			BorderSizePixel={0}
 			BackgroundColor3={new Color3(1, 0, 0)}

@@ -1,12 +1,27 @@
-import React from "@rbxts/react";
+import React, { Element, useEffect, useMemo, useRef } from "@rbxts/react";
 import { XAxis } from "./x-axis";
 import { useRem } from "ui/hooks/use-rem";
 import { YAxis } from "./y-axis";
 import { Grid } from "./grid";
 import { Point } from "./point";
+import { ClickListener } from "./click-listener";
+import { useSelector } from "@rbxts/react-reflex";
+import { selectPoints } from "store/editor-slice";
 
 export function Graph() {
 	const rem = useRem();
+	const graphContainer = useRef<Frame | undefined>();
+	const points = useSelector(selectPoints);
+
+	const pointsDisplay = useMemo(() => {
+		const pointsDisplay: Element[] = [];
+
+		for (const [x, y] of pairs(points)) {
+			pointsDisplay.push(<Point key={x} x={x} y={y} />);
+		}
+
+		return pointsDisplay;
+	}, [points]);
 
 	return (
 		<>
@@ -27,11 +42,14 @@ export function Graph() {
 				TextColor3={new Color3(0.8, 0.8, 0.8)}
 			/>
 			<frame
+				ref={graphContainer}
 				Size={new UDim2(1, -rem(30), 1, -rem(20))}
 				Position={new UDim2(0, rem(20), 0, 0)}
 				BackgroundTransparency={1}
 			>
 				<Grid />
+				<ClickListener graphContainer={graphContainer} />
+				{pointsDisplay}
 			</frame>
 		</>
 	);

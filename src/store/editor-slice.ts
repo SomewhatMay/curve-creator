@@ -1,4 +1,5 @@
 import { createProducer } from "@rbxts/reflex";
+import { RootState } from "store";
 
 interface EditorState {
 	Points: Record<number, number>;
@@ -8,6 +9,8 @@ export const initialState: EditorState = {
 	Points: {},
 };
 
+export const selectPoints = (state: RootState) => state.editor.Points;
+export const selectPoint = (state: RootState, x: number) => state.editor.Points[x];
 
 export const editorSlice = createProducer(initialState, {
 	addPoint: (state, x: number, y: number) => ({
@@ -26,4 +29,4 @@ export const editorSlice = createProducer(initialState, {
 		...state,
 		Points,
 	}),
-})
+});

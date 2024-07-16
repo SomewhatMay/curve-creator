@@ -1,5 +1,5 @@
 import { Root } from "@rbxts/react-roblox";
-import { RunService } from "@rbxts/services"
+import { RunService } from "@rbxts/services";
 import { producer } from "store";
 import { mountRoot } from "ui";
 
@@ -38,7 +38,7 @@ if (RunService.IsEdit()) {
 
 	dockWidgetGui.BindToClose(() => {
 		dockWidgetGui.Enabled = false;
-	})
+	});
 
 	const dockEnabledConnection = dockWidgetGui.GetPropertyChangedSignal("Enabled").Connect(() => {
 		toggleButton.SetActive(dockWidgetGui.Enabled);
@@ -47,7 +47,7 @@ if (RunService.IsEdit()) {
 		if (dockWidgetGui.Enabled && !pluginRoot) {
 			pluginRoot = mountRoot(dockWidgetGui);
 		}
-	})
+	});
 
 	plugin.Unloading.Connect(() => {
 		if (pluginRoot) {

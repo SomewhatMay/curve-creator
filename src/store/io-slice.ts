@@ -10,7 +10,7 @@ interface IoState {
 const initialState: IoState = {
 	FileOpened: false,
 	FileName: "",
-	Changed: true,
+	Changed: false,
 };
 
 export const selectFileOpened = (state: RootState) => state.io.FileOpened;
@@ -30,4 +30,4 @@ export const ioSlice = createProducer(initialState, {
 		...state,
 		Changed,
 	}),
-})
+});

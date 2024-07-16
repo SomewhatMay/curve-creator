@@ -7,6 +7,8 @@ import { Point } from "./point";
 import { ClickListener } from "./click-listener";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
+import { Line } from "./line";
+import { LinesContainer } from "./lines-container";
 
 export function Graph() {
 	const rem = useRem();
@@ -17,7 +19,7 @@ export function Graph() {
 		const pointsDisplay: Element[] = [];
 
 		for (const [x, y] of pairs(points)) {
-			pointsDisplay.push(<Point key={x} x={x} y={y} />);
+			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} />);
 		}
 
 		return pointsDisplay;
@@ -50,6 +52,7 @@ export function Graph() {
 				<Grid />
 				<ClickListener graphContainer={graphContainer} />
 				{pointsDisplay}
+				<LinesContainer />
 			</frame>
 		</>
 	);

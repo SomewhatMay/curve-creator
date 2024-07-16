@@ -14,15 +14,21 @@ export function ClickListener({ graphContainer }: props) {
 	const { addPoint } = useRootProducer();
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
+	const { setSettingsVisible } = useRootProducer();
 
 	useEffect(() => {
 		let clickConnection: RBXScriptConnection | undefined;
 		if (graphContainer.current) {
 			clickConnection = graphContainer.current.InputEnded.Connect((input) => {
 				if (!graphContainer.current) return;
-				if (settingsVisible || sidebarVisible) return;
+				if (sidebarVisible) return;
 
 				if (input.UserInputType === Enum.UserInputType.MouseButton1) {
+					if (settingsVisible) {
+						setSettingsVisible(false);
+						return;
+					}
+
 					const relativeX =
 						(input.Position.X - graphContainer.current.AbsolutePosition.X) /
 						graphContainer.current.AbsoluteSize.X;
@@ -42,7 +48,7 @@ export function ClickListener({ graphContainer }: props) {
 		return () => {
 			clickConnection?.Disconnect();
 		};
-	}, [graphContainer.current]);
+	}, [graphContainer.current, sidebarVisible, settingsVisible]);
 
 	return <></>;
 }

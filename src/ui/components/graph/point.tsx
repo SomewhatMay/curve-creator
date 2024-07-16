@@ -14,6 +14,7 @@ export function Point({ x, y }: props) {
 			Position={new UDim2(x, 0, 1 - y, 0)}
 			Size={new UDim2(0, rem(4), 0, rem(4))}
 			BackgroundTransparency={0}
+			AnchorPoint={new Vector2(0.5, 0.5)}
 			BorderSizePixel={0}
 			BackgroundColor3={new Color3(1, 0, 0)}
 		>

@@ -1,33 +1,28 @@
 import { createProducer } from "@rbxts/reflex";
 
-export type Point = {
-	x: number
-	y: number
-}
-
 interface EditorState {
-	Points: Point[]
+	Points: Record<number, number>;
 }
 
 export const initialState: EditorState = {
-	Points: [],
+	Points: {},
 };
 
 
 export const editorSlice = createProducer(initialState, {
-	addPoint: (state, Point: Point) => ({
+	addPoint: (state, x: number, y: number) => ({
 		...state,
-		Points: [...state.Points, Point],
+		Points: { ...state.Points, [x]: y },
 	}),
-	removePoint: (state, x: number, y: number) => ({
+	removePoint: (state, x: number) => ({
 		...state,
-		Points: state.Points.filter((point) => point.x !== x || point.y !== y),
+		Points: { ...state.Points, [x]: undefined as unknown as number },
 	}),
 	clearPoints: (state) => ({
 		...state,
 		Points: [],
 	}),
-	setPoints: (state, Points: Point[]) => ({
+	setPoints: (state, Points: Record<number, number>) => ({
 		...state,
 		Points,
 	}),

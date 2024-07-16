@@ -13,7 +13,7 @@ export function XAxis() {
 
 	return (
 		<frame
-			Size={new UDim2(1, 0, 0, rem(10))}
+			Size={new UDim2(1, 0, 0, rem(20))}
 			AnchorPoint={new Vector2(0.5, 1)}
 			Position={new UDim2(0.5, 0, 1, 0)}
 			BackgroundTransparency={1}
@@ -37,7 +37,7 @@ export function XAxis() {
 						BackgroundTransparency={1}
 						TextColor3={new Color3(0.8, 0.8, 0.8)}
 						TextXAlignment={Enum.TextXAlignment.Center}
-						TextSize={rem(4)}
+						TextSize={rem(8)}
 						TextTransparency={i === 0 ? 1 : 0}
 					/>
 				))}

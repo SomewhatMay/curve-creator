@@ -33,7 +33,12 @@ export function App() {
 					BackgroundTransparency={1}
 				>
 					<Graph />
-					<FullPadding padding={new UDim(0, rem(8))} PaddingLeft={new UDim(0, rem(16))} />
+					<uipadding
+						PaddingTop={new UDim(0, rem(14))}
+						PaddingBottom={new UDim(0, rem(10))}
+						PaddingLeft={new UDim(0, rem(16))}
+						PaddingRight={new UDim(0, rem(14))}
+					/>
 				</frame>
 			</frame>
 		</frame>

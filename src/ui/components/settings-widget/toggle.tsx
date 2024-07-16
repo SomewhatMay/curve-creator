@@ -28,7 +28,7 @@ export function Toggle({ title, valueUpdated }: props) {
 				Position={new UDim2(0, rem(3), 0, 0)}
 				TextXAlignment={Enum.TextXAlignment.Left}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
-				TextSize={rem(6)}
+				TextSize={rem(12)}
 				TextColor3={new Color3(1, 1, 1)}
 				BackgroundTransparency={1}
 				ZIndex={4}
@@ -36,7 +36,7 @@ export function Toggle({ title, valueUpdated }: props) {
 			<imagebutton
 				AnchorPoint={new Vector2(1, 0.5)}
 				Position={new UDim2(1, 0, 0.5, 0)}
-				Size={new UDim2(0, rem(15), 1, -rem(2))}
+				Size={new UDim2(0, rem(25), 1, -rem(2))}
 				ZIndex={4}
 				BackgroundColor3={animationGoal.map((x) =>
 					Color3.fromRGB(190, 190, 190).Lerp(Color3.fromRGB(33, 144, 255), x),
@@ -49,7 +49,7 @@ export function Toggle({ title, valueUpdated }: props) {
 			>
 				<frame
 					AnchorPoint={animationGoal.map((x) => new Vector2(x, 0.5))}
-					Size={new UDim2(0, rem(6), 0, rem(6))}
+					Size={new UDim2(0, rem(9), 0, rem(9))}
 					Position={animationGoal.map((x) => new UDim2(x, 0, 0.5, 0))}
 					BackgroundTransparency={0}
 					BackgroundColor3={Color3.fromRGB(255, 255, 255)}
@@ -57,7 +57,7 @@ export function Toggle({ title, valueUpdated }: props) {
 				>
 					<Rounded cornerRadius={new UDim(1, 0)} />
 				</frame>
-				<FullPadding padding={rem(1)} />
+				<FullPadding padding={rem(3)} />
 				<Rounded cornerRadius={new UDim(1, 0)} />
 			</imagebutton>
 		</>

@@ -19,14 +19,14 @@ export function SettingsTextBox({ title, text, valueUpdated }: props) {
 				Position={new UDim2(0, rem(3), 0, 0)}
 				TextXAlignment={Enum.TextXAlignment.Left}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
-				TextSize={rem(6)}
+				TextSize={rem(12)}
 				TextColor3={new Color3(1, 1, 1)}
 				BackgroundTransparency={1}
 				ZIndex={4}
 			/>
 			<textbox
 				PlaceholderText={text}
-				TextSize={rem(6)}
+				TextSize={rem(12)}
 				Text={text}
 				AnchorPoint={new Vector2(1, 0.5)}
 				TextColor3={new Color3(1, 1, 1)}

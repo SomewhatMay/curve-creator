@@ -29,7 +29,7 @@ export function SidebarToggle() {
 		<frame
 			AnchorPoint={new Vector2(0, 0.5)}
 			Position={new UDim2(0, rem(4), 0.5, 0)}
-			Size={new UDim2(0, rem(10), 1, -rem(4))}
+			Size={new UDim2(0, rem(16), 1, -rem(4))}
 			BackgroundTransparency={hover.map((x) => 1 - x * 0.3)}
 			BackgroundColor3={new Color3(0, 0, 0)}
 			ClipsDescendants={true}

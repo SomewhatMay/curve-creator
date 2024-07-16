@@ -54,7 +54,7 @@ export function Sidebar() {
 	return (
 		<>
 			<frame
-				Size={new UDim2(0, rem(100), 1, 0)}
+				Size={new UDim2(0, rem(200), 1, 0)}
 				BackgroundColor3={Color3.fromRGB(41, 41, 41)}
 				BorderSizePixel={0}
 				Position={open.map((x) => new UDim2(x - 1, 0, 0, 0))}
@@ -62,7 +62,7 @@ export function Sidebar() {
 			>
 				<textlabel
 					Text="Menu"
-					Size={new UDim2(1, 0, 0, rem(6))}
+					Size={new UDim2(1, 0, 0, rem(10))}
 					Position={new UDim2(0, rem(3), 0, rem(2))}
 					BackgroundTransparency={1}
 					TextColor3={new Color3(0.65, 0.65, 0.65)}
@@ -71,16 +71,16 @@ export function Sidebar() {
 					ZIndex={10}
 				/>
 				<frame
-					Size={new UDim2(1, 0, 1, -rem(12))}
+					Size={new UDim2(1, 0, 1, -rem(20))}
 					BackgroundTransparency={1}
-					Position={new UDim2(0, 0, 0, rem(12))}
+					Position={new UDim2(0, 0, 0, rem(20))}
 					ZIndex={10}
 				>
 					{sidebarOptions.map((option, index) => (
 						<SidebarButton key={option.title} option={option} index={index} />
 					))}
 				</frame>
-				<FullPadding padding={rem(6)} PaddingTop={new UDim(0, rem(4))} />
+				<FullPadding padding={rem(14)} PaddingTop={new UDim(0, rem(10))} />
 			</frame>
 			<frame
 				Size={new UDim2(1, 0, 1, 0)}

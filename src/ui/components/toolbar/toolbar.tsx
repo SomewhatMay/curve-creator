@@ -8,7 +8,7 @@ import { ToolbarButton } from "./toolbar-button";
 import { useRootProducer } from "store";
 import { selectSettingsVisible } from "store/settings-slice";
 
-export const TOOLBAR_HEIGHT = 12;
+export const TOOLBAR_HEIGHT = 20;
 
 export type ToolbarOption = {
 	icon: string;
@@ -44,15 +44,15 @@ export function Toolbar() {
 
 	useEffect(() => {
 		setFileNameSize(
-			TextService.GetTextSize(displayName, rem(6), Enum.Font.GothamMedium, new Vector2(math.huge, math.huge)).X,
+			TextService.GetTextSize(displayName, rem(10), Enum.Font.GothamMedium, new Vector2(math.huge, math.huge)).X,
 		);
 	}, [rem, displayName]);
 
 	return (
 		<frame Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT))} BackgroundTransparency={1}>
 			<textlabel
-				Size={new UDim2(1, 0, 0, rem(10))}
-				TextSize={rem(6)}
+				Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT - 2))}
+				TextSize={rem(10)}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
 				BackgroundTransparency={1}
 				TextXAlignment={Enum.TextXAlignment.Left}
@@ -63,9 +63,9 @@ export function Toolbar() {
 			{fileChanged && (
 				<textlabel
 					Text="  •  Unsaved changes"
-					Size={new UDim2(1, 0, 0, rem(10))}
+					Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT - 2))}
 					Position={fileNameSize.map((x) => new UDim2(0, x, 0, 0))}
-					TextSize={rem(6)}
+					TextSize={rem(10)}
 					FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
 					BackgroundTransparency={1}
 					TextXAlignment={Enum.TextXAlignment.Left}
@@ -92,7 +92,7 @@ export function Toolbar() {
 				/>
 			</frame>
 
-			<FullPadding paddingY={new UDim(0, rem(2))} paddingX={new UDim(0, rem(6))} />
+			<FullPadding paddingY={new UDim(0, rem(4))} paddingX={new UDim(0, rem(16))} />
 		</frame>
 	);
 }

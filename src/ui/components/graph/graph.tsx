@@ -11,8 +11,8 @@ export function Graph() {
 	return (
 		<>
 			<frame
-				Position={new UDim2(0, rem(10), 0, 0)}
-				Size={new UDim2(1, -rem(18), 1, 0)}
+				Position={new UDim2(0, rem(20), 0, 0)}
+				Size={new UDim2(1, -rem(30), 1, 0)}
 				BackgroundTransparency={1}
 			>
 				<XAxis />
@@ -20,14 +20,18 @@ export function Graph() {
 			<frame Position={new UDim2(0, rem(1), 0, 0)} Size={new UDim2(0, rem(10), 1, 0)} BackgroundTransparency={1}>
 				<YAxis />
 			</frame>
-			<textlabel Text="0" Position={new UDim2(0, rem(4), 1, -rem(4))} TextColor3={new Color3(0.8, 0.8, 0.8)} />
+			<textlabel
+				Text="0"
+				Position={new UDim2(0, rem(10), 1, -rem(10))}
+				TextSize={rem(8)}
+				TextColor3={new Color3(0.8, 0.8, 0.8)}
+			/>
 			<frame
-				Size={new UDim2(1, -rem(18), 1, -rem(10))}
-				Position={new UDim2(0, rem(10), 0, 0)}
+				Size={new UDim2(1, -rem(30), 1, -rem(20))}
+				Position={new UDim2(0, rem(20), 0, 0)}
 				BackgroundTransparency={1}
 			>
 				<Grid />
-				<Point x={0.7} y={0.7} />
 			</frame>
 		</>
 	);

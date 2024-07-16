@@ -49,13 +49,13 @@ export function SettingsWidget() {
 	return (
 		<frame
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
-			Size={new UDim2(0, rem(100), 0, rem(100))}
+			Size={new UDim2(0, rem(150), 0, rem(200))}
 			AnchorPoint={new Vector2(1, 0)}
 			Position={animationGoal.map((x) => new UDim2(1 + (1 - x), -rem(4), 0, rem(16)))}
 			ZIndex={4}
 		>
 			{settingsOptions.map((option) => (
-				<frame Size={new UDim2(1, 0, 0, rem(10))} BackgroundTransparency={1} ZIndex={4}>
+				<frame Size={new UDim2(1, 0, 0, rem(15))} BackgroundTransparency={1} ZIndex={4}>
 					<option.component
 						{...option.props}
 						title={option.title}
@@ -63,8 +63,8 @@ export function SettingsWidget() {
 					></option.component>
 				</frame>
 			))}
-			<FullPadding padding={rem(4)} />
-			<uilistlayout Padding={new UDim(0, rem(3))} />
+			<FullPadding padding={rem(12)} />
+			<uilistlayout Padding={new UDim(0, rem(5))} />
 			<Rounded />
 		</frame>
 	);

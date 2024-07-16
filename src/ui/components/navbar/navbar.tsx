@@ -2,7 +2,7 @@ import React from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { SidebarToggle } from "./sidebar-toggle";
 
-export const NAVBAR_HEIGHT = 14;
+export const NAVBAR_HEIGHT = 24;
 
 export function Navbar() {
 	const rem = useRem();
@@ -17,8 +17,8 @@ export function Navbar() {
 			<SidebarToggle />
 			<textlabel
 				AnchorPoint={new Vector2(0, 0.5)}
-				Position={new UDim2(0, rem(16), 0.5, 0)}
-				Size={new UDim2(0.5, 0, 1, -rem(6))}
+				Position={new UDim2(0, rem(22), 0.5, 0)}
+				Size={new UDim2(0.5, 0, 1, -rem(12))}
 				Text="Curve Creator"
 				TextColor3={new Color3(1, 1, 1)}
 				BackgroundTransparency={1}

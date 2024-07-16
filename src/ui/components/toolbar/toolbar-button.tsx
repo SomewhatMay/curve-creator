@@ -9,7 +9,9 @@ export function ToolbarButton({ tooltip, handler, icon }: ToolbarOption) {
 
 	return (
 		<imagebutton
-			Size={new UDim2(0, rem(12), 0, rem(12))}
+			AnchorPoint={new Vector2(0, 0.5)}
+			Position={new UDim2(0, 0, 0.5, 0)}
+			Size={new UDim2(0, rem(20), 0, rem(20))}
 			BackgroundTransparency={0}
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
 			Event={{
@@ -21,7 +23,7 @@ export function ToolbarButton({ tooltip, handler, icon }: ToolbarOption) {
 				ScaleType={Enum.ScaleType.Fit}
 				AnchorPoint={new Vector2(0.5, 0.5)}
 				Position={new UDim2(0.5, 0, 0.5, 0)}
-				Size={new UDim2(0, rem(8), 0, rem(8))}
+				Size={new UDim2(0, rem(12), 0, rem(12))}
 				BackgroundTransparency={1}
 			/>
 			<Rounded />

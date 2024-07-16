@@ -32,4 +32,4 @@ export const settingsSlice = createProducer(initialState, {
 		...state,
 		Experimental,
 	}),
-})
+});

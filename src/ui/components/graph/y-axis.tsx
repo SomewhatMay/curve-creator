@@ -12,7 +12,7 @@ export function YAxis() {
 	const rem = useRem();
 
 	return (
-		<frame Size={new UDim2(0, rem(10), 1, -rem(10))} Position={new UDim2(0, 0, 0, 0)} BackgroundTransparency={1}>
+		<frame Size={new UDim2(0, rem(20), 1, -rem(20))} Position={new UDim2(0, 0, 0, 0)} BackgroundTransparency={1}>
 			<frame
 				Size={new UDim2(0, rem(1), 1, 0)}
 				AnchorPoint={new Vector2(1, 0)}
@@ -23,7 +23,7 @@ export function YAxis() {
 			>
 				<Rounded />
 			</frame>
-			<frame Size={new UDim2(1, -rem(6), 1, 0)} Position={new UDim2(0, 0, 0, 0)} BackgroundTransparency={1}>
+			<frame Size={new UDim2(1, -rem(4), 1, 0)} Position={new UDim2(0, -rem(3), 0, 0)} BackgroundTransparency={1}>
 				{[...new Array(1 / trueStep, 0)].map((_, i) => (
 					<textlabel
 						key={i}
@@ -33,7 +33,7 @@ export function YAxis() {
 						BackgroundTransparency={1}
 						TextColor3={new Color3(0.8, 0.8, 0.8)}
 						TextXAlignment={Enum.TextXAlignment.Right}
-						TextSize={rem(4)}
+						TextSize={rem(8)}
 						TextTransparency={i === 0 ? 1 : 0}
 					/>
 				))}

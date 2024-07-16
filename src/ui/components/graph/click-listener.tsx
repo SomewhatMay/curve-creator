@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect } from "@rbxts/react";
+import React, { Binding, MutableRefObject, useEffect } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
 import { selectPoints } from "store/editor-slice";
@@ -6,12 +6,13 @@ import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 
 interface props {
+	targetX: Binding<number | undefined>;
 	graphContainer: MutableRefObject<Frame | undefined>;
 }
 
-export function ClickListener({ graphContainer }: props) {
+export function ClickListener({ targetX, graphContainer }: props) {
 	const points = useSelector(selectPoints);
-	const { addPoint } = useRootProducer();
+	const { addPoint, setChanged } = useRootProducer();
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const { setSettingsVisible } = useRootProducer();
@@ -24,6 +25,7 @@ export function ClickListener({ graphContainer }: props) {
 				if (sidebarVisible) return;
 
 				if (input.UserInputType === Enum.UserInputType.MouseButton1) {
+					if (targetX.getValue() !== undefined) return;
 					if (settingsVisible) {
 						setSettingsVisible(false);
 						return;
@@ -40,6 +42,7 @@ export function ClickListener({ graphContainer }: props) {
 
 					if (!points[relativeX]) {
 						addPoint(relativeX, 1 - relativeY);
+						setChanged(true);
 					}
 				}
 			});
@@ -50,5 +53,5 @@ export function ClickListener({ graphContainer }: props) {
 		};
 	}, [graphContainer.current, sidebarVisible, settingsVisible]);
 
-	return <></>;
+	return undefined;
 }

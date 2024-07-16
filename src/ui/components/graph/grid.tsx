@@ -22,7 +22,7 @@ export function Grid() {
 					key={"Y" + tostring(i)}
 					Size={new UDim2(1, 0, 0, rem(1))}
 					Position={new UDim2(0, 0, i * YAxisSTEP, 0)}
-					BackgroundTransparency={0.8}
+					BackgroundTransparency={0.9}
 					BorderSizePixel={0}
 				/>
 			))}

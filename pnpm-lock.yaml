@@ -20,6 +20,9 @@ dependencies:
   '@rbxts/reflex':
     specifier: ^4.3.1
     version: 4.3.1
+  '@rbxts/ripple':
+    specifier: ^0.8.2
+    version: 0.8.2
 
 devDependencies:
   '@rbxts/compiler-types':
@@ -197,6 +200,10 @@ packages:
 
   /@rbxts/reflex@4.3.1:
     resolution: {integrity: sha512-S5MbEpHKeRh9NWhwGJ789WbUsmlAlpQziWaNK4+kz1EpaaQ7uHQMZAuN1DYl4+QkqmOSuPlj04COwmArBGWH1Q==}
+    dev: false
+
+  /@rbxts/ripple@0.8.2:
+    resolution: {integrity: sha512-1F+yA8ugw0LEDBerQfIiIdUDoOfwz8O86GkH+sJkBViC/zJWDCZdrlzcdk7G7adePqkeBRfPp89g/4dUzZ4JQQ==}
     dev: false
 
   /@rbxts/services@1.5.4:

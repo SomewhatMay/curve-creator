@@ -1,4 +1,4 @@
-import React, { Element, useEffect, useMemo, useRef } from "@rbxts/react";
+import React, { Element, useEffect, useMemo, useRef, useState } from "@rbxts/react";
 import { XAxis } from "./x-axis";
 import { useRem } from "ui/hooks/use-rem";
 import { YAxis } from "./y-axis";
@@ -9,17 +9,20 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
 import { Line } from "./line";
 import { LinesContainer } from "./lines-container";
+import { Crosshair } from "./crosshair";
+import { useTargetCapturer } from "./hooks/use-target-capturer";
 
 export function Graph() {
 	const rem = useRem();
 	const graphContainer = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
+	const targetX = useTargetCapturer(graphContainer);
 
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
 
 		for (const [x, y] of pairs(points)) {
-			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} />);
+			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} />);
 		}
 
 		return pointsDisplay;
@@ -50,9 +53,10 @@ export function Graph() {
 				BackgroundTransparency={1}
 			>
 				<Grid />
-				<ClickListener graphContainer={graphContainer} />
+				<ClickListener targetX={targetX} graphContainer={graphContainer} />
 				{pointsDisplay}
 				<LinesContainer />
+				<Crosshair graphContainer={graphContainer} />
 			</frame>
 		</>
 	);

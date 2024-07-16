@@ -19,8 +19,6 @@ export function Line({ x1, x2, y1, y2 }: props) {
 	const distance = math.sqrt(math.pow(xDiff, 2) + math.pow(yDiff, 2));
 	const angle = math.atan2(yDiff, xDiff);
 
-	print(x1, x2, y1, y2, xDiff, yDiff, distance, angle);
-
 	return (
 		<frame
 			BackgroundTransparency={0}

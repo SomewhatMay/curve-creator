@@ -35,7 +35,7 @@ export function LinesContainer() {
 	}, [points, linesContainerFrame.current]);
 
 	return (
-		<frame ref={linesContainerFrame} BackgroundTransparency={0.9} Size={new UDim2(1, 0, 1, 0)}>
+		<frame ref={linesContainerFrame} BackgroundTransparency={1} Size={new UDim2(1, 0, 1, 0)}>
 			{linesDisplay}
 		</frame>
 	);

@@ -1,15 +1,18 @@
-import React from "@rbxts/react";
+import React, { Binding } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
 
 interface props {
 	title: string;
-	text?: string;
+	text?: string | Binding<string>;
+	placeholder?: string;
 	valueUpdated: (rbx: TextBox, enterPressed: boolean) => void;
 }
 
-export function SettingsTextBox({ title, text, valueUpdated }: props) {
+export function SettingsTextBox({ title, text, placeholder, valueUpdated }: props) {
 	const rem = useRem();
+
+	print(title, text);
 
 	return (
 		<>
@@ -25,9 +28,9 @@ export function SettingsTextBox({ title, text, valueUpdated }: props) {
 				ZIndex={4}
 			/>
 			<textbox
-				PlaceholderText={text}
+				PlaceholderText={placeholder}
 				TextSize={rem(12)}
-				Text={text}
+				Text={text ?? ""}
 				AnchorPoint={new Vector2(1, 0.5)}
 				TextColor3={new Color3(1, 1, 1)}
 				Position={new UDim2(1, 0, 0.5, 0)}

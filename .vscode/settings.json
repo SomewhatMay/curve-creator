@@ -9,5 +9,5 @@
 	},
 	"eslint.run": "onType",
 	"eslint.format.enable": true,
-	"cSpell.words": ["imagelabel", "uilistlayout"]
+	"cSpell.words": ["gsub", "imagelabel", "uilistlayout"]
 }

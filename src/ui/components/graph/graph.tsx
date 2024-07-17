@@ -41,7 +41,7 @@ export function Graph() {
 				<ClickListener targetX={targetX} graphContainer={graphContainer} />
 				{pointsDisplay}
 				<LinesContainer />
-				{guidesEnabled && <Crosshair graphContainer={graphContainer} />}
+				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
 			</frame>
 		</>
 	);

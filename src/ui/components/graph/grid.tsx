@@ -1,7 +1,7 @@
 import React from "@rbxts/react";
-import { XAxisSTEP, XAxisTrueSTEP } from "./x-axis";
+import { XAxisSTEP, XAxisTrueSTEP } from "./axes";
 import { useRem } from "ui/hooks/use-rem";
-import { YAxisSTEP, YAxisTrueSTEP } from "./y-axis";
+import { YAxisSTEP, YAxisTrueSTEP } from "./axes";
 
 export function Grid() {
 	const rem = useRem();

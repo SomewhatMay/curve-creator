@@ -1,6 +1,6 @@
 import React from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
-import { Rounded } from "../rounded";
+import { Rounded } from "ui/components/rounded";
 
 const STEP = 0.1;
 const trueStep = STEP / (STEP + 1);

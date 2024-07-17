@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect } from "@rbxts/react";
+import React, { MutableRefObject, useBinding, useEffect } from "@rbxts/react";
 
 /**
  * Watches for mouse movement on a target GUI object
@@ -9,7 +9,7 @@ export function useMouseMove<T extends GuiObject>(
 	targetObj: MutableRefObject<T | undefined>,
 	listener?: (position: Vector2, input: InputObject) => void,
 ) {
-	const [mousePosition, setMousePosition] = React.useState<Vector2>(new Vector2(0, 0));
+	const [mousePosition, setMousePosition] = useBinding<Vector2>(new Vector2(0, 0));
 
 	useEffect(() => {
 		let mouseMoveConnection: RBXScriptConnection | undefined = undefined;

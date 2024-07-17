@@ -53,7 +53,8 @@ export function Sidebar() {
 
 	return (
 		<>
-			<frame
+			<imagebutton
+				AutoButtonColor={false}
 				Size={new UDim2(0, rem(200), 1, 0)}
 				BackgroundColor3={Color3.fromRGB(41, 41, 41)}
 				BorderSizePixel={0}
@@ -81,7 +82,7 @@ export function Sidebar() {
 					))}
 				</frame>
 				<FullPadding padding={rem(14)} PaddingTop={new UDim(0, rem(10))} />
-			</frame>
+			</imagebutton>
 			<frame
 				Size={new UDim2(1, 0, 1, 0)}
 				Position={new UDim2(0, 0, 0, 0)}

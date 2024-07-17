@@ -51,7 +51,8 @@ export function SettingsWidget() {
 	}, [settingsVisible]);
 
 	return (
-		<frame
+		<imagebutton
+			AutoButtonColor={false}
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
 			Size={new UDim2(0, rem(150), 0, rem(200))}
 			AnchorPoint={new Vector2(1, 0)}
@@ -71,6 +72,6 @@ export function SettingsWidget() {
 			<FullPadding padding={rem(12)} />
 			<uilistlayout Padding={new UDim(0, rem(5))} />
 			<Rounded />
-		</frame>
+		</imagebutton>
 	);
 }

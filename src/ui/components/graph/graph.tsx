@@ -9,11 +9,13 @@ import { LinesContainer } from "./lines-container";
 import { Crosshair } from "./crosshair";
 import { useTargetCapturer } from "./hooks/use-target-capturer";
 import { Axes } from "./axes";
+import { selectGuides } from "store/settings-slice";
 
 export function Graph() {
 	const rem = useRem();
 	const graphContainer = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
+	const guidesEnabled = useSelector(selectGuides);
 	const targetX = useTargetCapturer(graphContainer);
 
 	const pointsDisplay = useMemo(() => {
@@ -39,7 +41,7 @@ export function Graph() {
 				<ClickListener targetX={targetX} graphContainer={graphContainer} />
 				{pointsDisplay}
 				<LinesContainer />
-				<Crosshair graphContainer={graphContainer} />
+				{guidesEnabled && <Crosshair graphContainer={graphContainer} />}
 			</frame>
 		</>
 	);

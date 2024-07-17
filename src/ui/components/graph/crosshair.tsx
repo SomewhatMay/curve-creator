@@ -11,6 +11,7 @@ interface props {
 
 export function Crosshair({ graphContainer }: props) {
 	const rem = useRem();
+
 	const [animationX, motionX] = useMotion(0);
 	const [animationY, motionY] = useMotion(0);
 

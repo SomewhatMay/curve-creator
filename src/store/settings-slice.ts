@@ -5,19 +5,19 @@ interface SettingsState {
 	Visible: boolean;
 
 	Resolution: number;
-	Experimental: boolean;
+	Guides: boolean;
 }
 
 const initialState: SettingsState = {
 	Visible: false,
 
 	Resolution: 1,
-	Experimental: false,
+	Guides: true,
 };
 
 export const selectSettingsVisible = (state: RootState) => state.settings.Visible;
 export const selectResolution = (state: RootState) => state.settings.Resolution;
-export const selectExperimental = (state: RootState) => state.settings.Experimental;
+export const selectGuides = (state: RootState) => state.settings.Guides;
 
 export const settingsSlice = createProducer(initialState, {
 	setSettingsVisible: (state, Visible: boolean) => ({
@@ -28,8 +28,8 @@ export const settingsSlice = createProducer(initialState, {
 		...state,
 		Resolution,
 	}),
-	setExperimental: (state, Experimental: boolean) => ({
+	setGuides: (state, Guides: boolean) => ({
 		...state,
-		Experimental,
+		Guides,
 	}),
 });

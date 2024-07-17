@@ -6,18 +6,17 @@ import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 
 interface props {
 	title: string;
+	enabled: boolean;
 	valueUpdated: (enabled: boolean) => void;
 }
 
-export function Toggle({ title, valueUpdated }: props) {
+export function Toggle({ title, enabled, valueUpdated }: props) {
 	const rem = useRem();
-	const [toggled, setToggled] = useState(false);
-	const [animationGoal, setAnimationGoal] = useMotor(0);
+	const [animationGoal, setAnimationGoal] = useMotor(enabled ? 1 : 0);
 
 	const toggle = () => {
-		setToggled(!toggled);
-		valueUpdated(!toggled);
-		setAnimationGoal(!toggled ? new Spring(1) : new Spring(0));
+		valueUpdated(!enabled);
+		setAnimationGoal(!enabled ? new Spring(1) : new Spring(0));
 	};
 
 	return (

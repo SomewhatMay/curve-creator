@@ -10,7 +10,7 @@ interface props {
 	pointY: number;
 }
 
-const handleColor = new Color3(0.49, 0.14, 0.14);
+const handleColor = new Color3(0.5, 0.56, 0.49);
 
 export function Handle({ handleX, handleY, pointX, pointY }: props) {
 	const rem = useRem();

@@ -5,12 +5,21 @@ import { useInputBegan } from "ui/hooks/use-input-began";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
+export type TargetInfo = {
+	x: number | undefined;
+	handle: "handle1" | "handle2" | undefined;
+};
+const emptyTarget: TargetInfo = { x: undefined, handle: undefined };
+
 const MAX_TARGET_DISTANCE = 0.025;
 
 export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undefined>) {
 	const points = useSelector(selectPoints);
 	const movingPoint = useSelector(selectMovingPoint);
-	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
+	const [targetPointX, setTargetPointX] = useBinding<TargetInfo>({
+		x: undefined,
+		handle: undefined,
+	});
 
 	useMouseMove(
 		useCallback(
@@ -18,12 +27,12 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 				if (graphContainer.current === undefined) return;
 
 				if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
-					setTargetPointX(undefined);
+					setTargetPointX(emptyTarget);
 					return;
 				}
 
 				if (movingPoint) {
-					setTargetPointX(undefined);
+					setTargetPointX(emptyTarget);
 					return;
 				}
 
@@ -40,7 +49,10 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 					}
 				}
 
-				setTargetPointX(closestX);
+				setTargetPointX({
+					x: closestX,
+					handle: undefined,
+				});
 			},
 			[points],
 		),
@@ -48,7 +60,7 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 
 	useInputBegan((input) => {
 		if (input.KeyCode === Enum.KeyCode.LeftShift) {
-			setTargetPointX(undefined);
+			setTargetPointX(emptyTarget);
 		}
 	});
 

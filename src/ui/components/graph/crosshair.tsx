@@ -1,4 +1,4 @@
-import React, { Binding, joinBindings, MutableRefObject, useBinding, useCallback, useEffect } from "@rbxts/react";
+import React, { Binding, joinBindings, MutableRefObject, useCallback } from "@rbxts/react";
 import { useMotion } from "ui/hooks/use-motion";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
@@ -7,13 +7,14 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
 import { selectRounding } from "store/settings-slice";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
+import { TargetInfo } from "./hooks/use-target-capturer";
 
 interface props {
 	graphContainer: MutableRefObject<Frame | undefined>;
-	targetX: Binding<number | undefined>;
+	targetInfo: Binding<TargetInfo>;
 }
 
-export function Crosshair({ graphContainer, targetX }: props) {
+export function Crosshair({ graphContainer, targetInfo }: props) {
 	const rem = useRem();
 
 	const points = useSelector(selectPoints);
@@ -76,8 +77,9 @@ export function Crosshair({ graphContainer, targetX }: props) {
 			<frame
 				Size={new UDim2(0, rem(1), 1, 0)}
 				// Position={animationX.map((x) => new UDim2(x, 0, 0, 0))}
-				Position={joinBindings([animationX, targetX]).map(
-					([x, targetX]) => new UDim2(targetX ?? x ?? 0, 0, 0, 0),
+				// FIXME: This type assertion may cause lots of issues..
+				Position={joinBindings([animationX, targetInfo as unknown as Binding<number>]).map(
+					([animationX, info]) => new UDim2((info as unknown as TargetInfo).x ?? animationX ?? 0, 0, 0, 0),
 				)}
 				BackgroundTransparency={0.8}
 				BorderSizePixel={0}
@@ -89,8 +91,9 @@ export function Crosshair({ graphContainer, targetX }: props) {
 					TextSize={rem(6)}
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationX.map((x) => tostring(math.floor(x * 100) / 100))}
-					Text={joinBindings([animationX, targetX]).map(([x, targetX]) =>
-						`%.${rounding}f`.format(targetX ?? x ?? 0),
+					Text={joinBindings([animationX, targetInfo as unknown as Binding<number>]).map(
+						([animationX, info]) =>
+							`%.${rounding}f`.format((info as unknown as TargetInfo).x ?? animationX ?? 0),
 					)}
 				/>
 				<Rounded />
@@ -98,8 +101,17 @@ export function Crosshair({ graphContainer, targetX }: props) {
 			<frame
 				Size={new UDim2(1, 0, 0, rem(1))}
 				// Position={animationY.map((x) => new UDim2(0, 0, 1 - x, 0))}
-				Position={joinBindings([animationY, targetX]).map(
-					([y, targetX]) => new UDim2(0, 0, 1 - ((targetX && points[targetX].y) ?? y ?? 0), 0),
+				Position={joinBindings([animationY, targetInfo as unknown as Binding<number>]).map(
+					([y, info]) =>
+						new UDim2(
+							0,
+							0,
+							1 -
+								(((info as unknown as TargetInfo).x && points[(info as unknown as TargetInfo).x!].y) ??
+									y ??
+									0),
+							0,
+						),
 				)}
 				BackgroundTransparency={0.8}
 				BorderSizePixel={0}
@@ -111,8 +123,12 @@ export function Crosshair({ graphContainer, targetX }: props) {
 					TextSize={rem(6)}
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationY.map((y) => tostring(math.floor(y * 100) / 100))}
-					Text={joinBindings([animationY, targetX]).map(([y, targetX]) =>
-						`%.${rounding}f`.format((targetX && points[targetX].y) ?? y ?? 0),
+					Text={joinBindings([animationY, targetInfo as unknown as Binding<number>]).map(([y, info]) =>
+						`%.${rounding}f`.format(
+							((info as unknown as TargetInfo).x && points[(info as unknown as TargetInfo).x!].y) ??
+								y ??
+								0,
+						),
 					)}
 				/>
 				<Rounded />

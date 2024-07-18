@@ -7,6 +7,7 @@ import { FullPadding } from "../../full-padding";
 import { PointTextBox } from "./point-textbox";
 import { PointButton } from "./point-button";
 import { useRootProducer } from "store";
+import { calculateHandlePos } from "ui/util/calculate-handle-pos";
 
 interface props {
 	selectedX: number | undefined;
@@ -41,16 +42,28 @@ export function PointInfo({ selectedX }: props) {
 
 	const handleRepositionX = (newX: number) => {
 		if (selectedX !== undefined) {
+			const { y, handle1, handle2 } = points[selectedX];
 			removePoint(selectedX);
-			addPoint(newX, selectedY!);
+			addPoint(
+				newX,
+				selectedY!,
+				handle1 ? calculateHandlePos(handle1, selectedX, y, newX, y) : undefined,
+				handle2 ? calculateHandlePos(handle2, selectedX, y, newX, y) : undefined,
+			);
 			selectPoint(newX);
 		}
 	};
 
 	const handleRepositionY = (newY: number) => {
 		if (selectedX !== undefined) {
+			const { y, handle1, handle2 } = points[selectedX];
 			removePoint(selectedX);
-			addPoint(selectedX, newY);
+			addPoint(
+				selectedX,
+				newY,
+				handle1 ? calculateHandlePos(handle1, selectedX, y, selectedX, newY) : undefined,
+				handle2 ? calculateHandlePos(handle2, selectedX, y, selectedX, newY) : undefined,
+			);
 			selectPoint(selectedX);
 		}
 	};

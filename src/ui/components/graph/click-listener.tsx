@@ -4,6 +4,7 @@ import { useRootProducer } from "store";
 import { selectMovingInfo, selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
+import { calculateHandlePos } from "ui/util/calculate-handle-pos";
 
 interface props {
 	targetX: Binding<number | undefined>;
@@ -52,17 +53,23 @@ export function ClickListener({ targetX, graphContainer }: props) {
 					if (movingPoint) {
 						const newHandle1Position =
 							movingInfo && movingInfo.handle1
-								? ([
-										math.clamp(movingInfo.handle1[0] - movingInfo.x + relativeX, 0, 1),
-										math.clamp(movingInfo.handle1[1] - movingInfo.y + (1 - relativeY), 0, 1),
-									] as [number, number])
+								? calculateHandlePos(
+										movingInfo.handle1,
+										movingInfo.x,
+										movingInfo.y,
+										relativeX,
+										1 - relativeY,
+									)
 								: undefined;
 						const newHandle2Position =
 							movingInfo && movingInfo.handle2
-								? ([
-										math.clamp(movingInfo.handle2[0] - movingInfo.x + relativeX, 0, 1),
-										math.clamp(movingInfo.handle2[1] - movingInfo.y + (1 - relativeY), 0, 1),
-									] as [number, number])
+								? calculateHandlePos(
+										movingInfo.handle2,
+										movingInfo.x,
+										movingInfo.y,
+										relativeX,
+										1 - relativeY,
+									)
 								: undefined;
 
 						addPoint(relativeX, 1 - relativeY, newHandle1Position, newHandle2Position);

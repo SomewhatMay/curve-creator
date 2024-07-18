@@ -6,7 +6,9 @@ interface EditorState {
 }
 
 export const initialState: EditorState = {
-	Points: {},
+	Points: {
+		[0.5]: 0.5,
+	},
 };
 
 export const selectPoints = (state: RootState) => state.editor.Points;

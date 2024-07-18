@@ -10,6 +10,7 @@ import { Crosshair } from "./crosshair";
 import { useTargetCapturer } from "./hooks/use-target-capturer";
 import { Axes } from "./axes";
 import { selectGuides } from "store/settings-slice";
+import { PointInfo } from "./point-info";
 
 export function Graph() {
 	const rem = useRem();
@@ -42,6 +43,7 @@ export function Graph() {
 				{pointsDisplay}
 				<LinesContainer />
 				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
+				<PointInfo x={targetX} />
 			</frame>
 		</>
 	);

@@ -12,8 +12,6 @@ interface props {
 export function SettingsTextBox({ title, text, placeholder, valueUpdated }: props) {
 	const rem = useRem();
 
-	print(title, text);
-
 	return (
 		<>
 			<textlabel
@@ -36,7 +34,7 @@ export function SettingsTextBox({ title, text, placeholder, valueUpdated }: prop
 				Position={new UDim2(1, 0, 0.5, 0)}
 				Size={new UDim2(0.35, 0, 1, 0)}
 				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
-				BackgroundColor3={Color3.fromRGB(38, 38, 38)}
+				BackgroundColor3={Color3.fromRGB(36, 36, 36)}
 				TextXAlignment={Enum.TextXAlignment.Center}
 				ZIndex={4}
 				Event={{

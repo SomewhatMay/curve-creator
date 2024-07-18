@@ -1,6 +1,6 @@
 import React, { Element, useEffect, useRef, useState } from "@rbxts/react";
 import { useSelector, useSelectorCreator } from "@rbxts/react-reflex";
-import { selectOrderedPoints, selectPoints } from "store/editor-slice";
+import { selectOrderedPoints } from "store/editor-slice";
 import { Line } from "./line";
 import { selectFillBounds } from "store/settings-slice";
 

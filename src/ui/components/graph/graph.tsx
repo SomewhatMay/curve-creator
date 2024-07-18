@@ -13,6 +13,7 @@ import { selectGuides } from "store/settings-slice";
 import { PointInfo } from "./point-info";
 import { TOOLBAR_HEIGHT } from "../toolbar";
 import { PointMover } from "./point-mover";
+import { HandleContainer } from "./handle-container";
 
 export function Graph() {
 	const rem = useRem();
@@ -52,6 +53,7 @@ export function Graph() {
 				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
 				<PointInfo selectedX={selectedPoint} />
 				<PointMover graphicsContainer={graphContainer} />
+				<HandleContainer />
 			</frame>
 			<uipadding
 				PaddingTop={new UDim(0, rem(14))}

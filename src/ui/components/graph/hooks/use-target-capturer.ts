@@ -1,6 +1,6 @@
 import { MutableRefObject, useBinding, useCallback } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
-import { selectPoints } from "store/editor-slice";
+import { selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { useInputBegan } from "ui/hooks/use-input-began";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
@@ -9,6 +9,7 @@ const MAX_TARGET_DISTANCE = 0.025;
 
 export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undefined>) {
 	const points = useSelector(selectPoints);
+	const movingPoint = useSelector(selectMovingPoint);
 	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
 
 	useMouseMove(
@@ -17,6 +18,11 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 				if (graphContainer.current === undefined) return;
 
 				if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
+					setTargetPointX(undefined);
+					return;
+				}
+
+				if (movingPoint) {
 					setTargetPointX(undefined);
 					return;
 				}

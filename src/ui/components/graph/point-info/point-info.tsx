@@ -57,8 +57,8 @@ export function PointInfo({ selectedX }: props) {
 
 	const handleMove = () => {
 		if (selectedX !== undefined) {
+			setMovingPoint(true, { x: selectedX, ...points[selectedX] });
 			removePoint(selectedX);
-			setMovingPoint(true);
 		}
 	};
 

@@ -99,7 +99,7 @@ export function Crosshair({ graphContainer, targetX }: props) {
 				Size={new UDim2(1, 0, 0, rem(1))}
 				// Position={animationY.map((x) => new UDim2(0, 0, 1 - x, 0))}
 				Position={joinBindings([animationY, targetX]).map(
-					([y, targetX]) => new UDim2(0, 0, 1 - ((targetX && points[targetX]) ?? y ?? 0), 0),
+					([y, targetX]) => new UDim2(0, 0, 1 - ((targetX && points[targetX].y) ?? y ?? 0), 0),
 				)}
 				BackgroundTransparency={0.8}
 				BorderSizePixel={0}
@@ -112,7 +112,7 @@ export function Crosshair({ graphContainer, targetX }: props) {
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationY.map((y) => tostring(math.floor(y * 100) / 100))}
 					Text={joinBindings([animationY, targetX]).map(([y, targetX]) =>
-						`%.${rounding}f`.format((targetX && points[targetX]) ?? y ?? 0),
+						`%.${rounding}f`.format((targetX && points[targetX].y) ?? y ?? 0),
 					)}
 				/>
 				<Rounded />

@@ -8,7 +8,7 @@ interface PluginState {
 
 const initialState: PluginState = {
 	Visible: true,
-	SidebarVisible: true,
+	SidebarVisible: false,
 };
 
 export const selectPluginVisibility = (state: RootState) => state.plugin.Visible;

@@ -16,7 +16,7 @@ export function LinesContainer() {
 			const linesDisplay: Element[] = [];
 			let previousPoint: [number, number] | undefined;
 
-			for (const [_, [x, y]] of pairs(points)) {
+			for (const [_, { x, y }] of pairs(points)) {
 				if (previousPoint) {
 					linesDisplay.push(
 						<Line

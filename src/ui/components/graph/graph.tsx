@@ -25,7 +25,7 @@ export function Graph() {
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
 
-		for (const [x, y] of pairs(points)) {
+		for (const [x, { y }] of pairs(points)) {
 			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} />);
 		}
 

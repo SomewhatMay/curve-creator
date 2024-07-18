@@ -16,7 +16,7 @@ export function PointInfo({ selectedX }: props) {
 	const rem = useRem();
 	const { setMovingPoint, selectPoint, addPoint, removePoint } = useRootProducer();
 	const points = useSelector(selectPoints);
-	const selectedY = selectedX !== undefined ? points[selectedX] : undefined;
+	const selectedY = selectedX !== undefined ? points[selectedX].y : undefined;
 
 	let containerX = 0.5;
 	let containerY = 1;

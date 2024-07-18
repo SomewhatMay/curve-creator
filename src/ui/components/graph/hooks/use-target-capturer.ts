@@ -26,7 +26,7 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 				let closestDist = MAX_TARGET_DISTANCE,
 					closestX = undefined;
 
-				for (const [x, y] of pairs(points)) {
+				for (const [x, { y }] of pairs(points)) {
 					const dist = math.sqrt(math.pow(x - position.X, 2) + math.pow(1 - y - position.Y, 2));
 					if (dist <= closestDist) {
 						closestDist = dist;

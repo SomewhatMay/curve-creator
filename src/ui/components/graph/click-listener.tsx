@@ -5,10 +5,9 @@ import { selectMovingInfo, selectMovingPoint, selectPoints, selectSelectedPoint 
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 import { calculateHandlePos } from "ui/util/calculate-handle-pos";
-import { TargetInfo } from "./hooks/use-target-capturer";
 
 interface props {
-	targetX: Binding<TargetInfo>;
+	targetX: Binding<number | undefined>;
 	graphContainer: MutableRefObject<Frame | undefined>;
 }
 
@@ -33,8 +32,8 @@ export function ClickListener({ targetX, graphContainer }: props) {
 						setSettingsVisible(false);
 						return;
 					}
-					if (targetX.getValue().x !== undefined) {
-						selectPoint(targetX.getValue().x);
+					if (targetX.getValue() !== undefined) {
+						selectPoint(targetX.getValue());
 						return;
 					}
 					if (selectedPoint !== undefined) {

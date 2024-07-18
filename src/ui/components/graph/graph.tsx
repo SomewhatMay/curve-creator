@@ -27,7 +27,7 @@ export function Graph() {
 		const pointsDisplay: Element[] = [];
 
 		for (const [x, { y }] of pairs(points)) {
-			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetInfo={targetX} />);
+			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} />);
 		}
 
 		return pointsDisplay;
@@ -50,7 +50,7 @@ export function Graph() {
 				<ClickListener targetX={targetX} graphContainer={graphContainer} />
 				{pointsDisplay}
 				<LinesContainer />
-				{guidesEnabled && <Crosshair targetInfo={targetX} graphContainer={graphContainer} />}
+				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
 				<PointInfo selectedX={selectedPoint} />
 				<PointMover graphicsContainer={graphContainer} />
 				<HandleContainer />

@@ -37,6 +37,7 @@ export function PointTextBox({ title, value, placeholder, valueUpdated }: props)
 				Event={{
 					FocusLost: (rbx) => {
 						let cleaned = tonumber(rbx.Text.gsub("%s+", "")[0]) ?? 0;
+						cleaned = math.clamp(cleaned, 0, 1);
 
 						if (cleaned !== displayText.getValue()) valueUpdated(cleaned);
 						setDisplayText(cleaned);

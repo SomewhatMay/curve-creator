@@ -14,12 +14,28 @@ interface props {
 
 export function PointInfo({ selectedX }: props) {
 	const rem = useRem();
-	const { removePoint } = useRootProducer();
+	const { selectPoint, addPoint, removePoint } = useRootProducer();
 	const points = useSelector(selectPoints);
 	const selectedY = selectedX ? points[selectedX] : undefined;
 
 	const handleDelete = () => {
 		if (selectedX) removePoint(selectedX);
+	};
+
+	const handleRepositionX = (newX: number) => {
+		if (selectedX) {
+			removePoint(selectedX);
+			addPoint(newX, selectedY!);
+			selectPoint(newX);
+		}
+	};
+
+	const handleRepositionY = (newY: number) => {
+		if (selectedX) {
+			removePoint(selectedX);
+			addPoint(selectedX, newY);
+			selectPoint(selectedX);
+		}
 	};
 
 	return (
@@ -34,8 +50,8 @@ export function PointInfo({ selectedX }: props) {
 			Visible={selectedX !== undefined}
 		>
 			<frame Size={new UDim2(1, 0, 0.5, 0)} BackgroundTransparency={1}>
-				<PointTextBox title="x" value={selectedX} valueUpdated={() => {}} />
-				<PointTextBox title="y" value={selectedY} valueUpdated={() => {}} />
+				<PointTextBox title="x" value={selectedX} valueUpdated={handleRepositionX} />
+				<PointTextBox title="y" value={selectedY} valueUpdated={handleRepositionY} />
 				<uilistlayout FillDirection={Enum.FillDirection.Horizontal} />
 			</frame>
 			<frame Size={new UDim2(1, 0, 0.45, 0)} Position={new UDim2(0, 0, 0.55, 0)} BackgroundTransparency={1}>

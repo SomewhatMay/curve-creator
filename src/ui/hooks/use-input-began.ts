@@ -1,15 +1,15 @@
 import { MutableRefObject, useEffect } from "@rbxts/react";
+import { useInputContext } from "ui/providers/input-provider";
 
-export function useInputBegan<T extends GuiObject>(
-	targetObj: MutableRefObject<T | undefined>,
-	listener: (input: InputObject) => void,
-) {
+export function useInputBegan(listener: (input: InputObject) => void) {
+	const inputContainer = useInputContext();
+
 	useEffect(() => {
 		let inputBeganConnection: RBXScriptConnection | undefined = undefined;
 
-		if (targetObj.current) {
-			inputBeganConnection = targetObj.current.InputBegan.Connect((input) => {
-				if (!targetObj.current) return;
+		if (inputContainer.current) {
+			inputBeganConnection = inputContainer.current.InputBegan.Connect((input) => {
+				if (!inputContainer.current) return;
 				listener(input);
 			});
 		}
@@ -19,5 +19,5 @@ export function useInputBegan<T extends GuiObject>(
 				inputBeganConnection.Disconnect();
 			}
 		};
-	}, [targetObj.current, listener]);
+	}, [inputContainer.current, listener]);
 }

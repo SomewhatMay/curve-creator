@@ -1,4 +1,4 @@
-import React, { useEffect } from "@rbxts/react";
+import React, { useEffect, useRef } from "@rbxts/react";
 import { RootProvider } from "./providers/root-provider";
 import { clearSizeListener, createSizeListener } from "./util/size-listener";
 
@@ -8,6 +8,7 @@ interface props extends React.PropsWithChildren {
 
 export function PluginWrapper({ rootWidget, children }: props) {
 	const [rootSize, setRootSize] = React.useState(new Vector2(700, 400));
+	const rootContainerRef = useRef<Frame>();
 
 	useEffect(() => {
 		createSizeListener(rootWidget, setRootSize);
@@ -15,5 +16,11 @@ export function PluginWrapper({ rootWidget, children }: props) {
 		return clearSizeListener;
 	}, [rootWidget]);
 
-	return <RootProvider rootSize={rootSize}>{children}</RootProvider>;
+	return (
+		<frame Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={1} ref={rootContainerRef}>
+			<RootProvider rootContainer={rootContainerRef} rootSize={rootSize}>
+				{children}
+			</RootProvider>
+		</frame>
+	);
 }

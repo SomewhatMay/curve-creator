@@ -1,35 +1,25 @@
 import React, { MutableRefObject, useBinding, useEffect } from "@rbxts/react";
+import { useInputContext } from "ui/providers/input-provider";
 
 /**
  * Watches for mouse movement on a target GUI object
  * and returns the relative position of the mouse on the object
  * in the range [0, 1] on both X and Y axes.
  */
-export function useMouseMove<T extends GuiObject>(
-	targetObj: MutableRefObject<T | undefined>,
-	listener?: (position: Vector2, input: InputObject) => void,
-) {
+export function useMouseMove(listener?: (position: Vector2, input: InputObject) => void) {
+	const inputContainer = useInputContext();
 	const [mousePosition, setMousePosition] = useBinding<Vector2>(new Vector2(0, 0));
 
 	useEffect(() => {
 		let mouseMoveConnection: RBXScriptConnection | undefined = undefined;
 
-		if (targetObj.current) {
-			mouseMoveConnection = targetObj.current.InputChanged.Connect((input) => {
-				if (!targetObj.current) return;
+		if (inputContainer.current) {
+			mouseMoveConnection = inputContainer.current.InputChanged.Connect((input) => {
+				if (!inputContainer.current) return;
 
 				if (input.UserInputType === Enum.UserInputType.MouseMovement) {
-					const relativeX =
-						(input.Position.X - targetObj.current.AbsolutePosition.X) / targetObj.current.AbsoluteSize.X;
-					const relativeY =
-						(input.Position.Y - targetObj.current.AbsolutePosition.Y) / targetObj.current.AbsoluteSize.Y;
-
-					if (relativeX < 0 || relativeX > 1 || relativeY < 0 || relativeY > 1) {
-						return;
-					}
-
-					setMousePosition(new Vector2(relativeX, relativeY));
-					listener?.(new Vector2(relativeX, relativeY), input);
+					setMousePosition(new Vector2(input.Position.X, input.Position.Y));
+					listener?.(new Vector2(input.Position.X, input.Position.Y), input);
 				}
 			});
 		}
@@ -39,7 +29,7 @@ export function useMouseMove<T extends GuiObject>(
 				mouseMoveConnection.Disconnect();
 			}
 		};
-	}, [targetObj.current, listener]);
+	}, [inputContainer.current, listener]);
 
 	return mousePosition;
 }

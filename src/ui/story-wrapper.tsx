@@ -15,7 +15,7 @@ export function StoryWrapper({ children }: React.PropsWithChildren) {
 	}, [rootWidget]);
 
 	return (
-		<RootProvider rootSize={rootSize}>
+		<RootProvider rootContainer={rootWidget} rootSize={rootSize}>
 			<frame ref={rootWidget} BorderSizePixel={0} Size={new UDim2(0, 700, 0, 400)}>
 				{children}
 			</frame>

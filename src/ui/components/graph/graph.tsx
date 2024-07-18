@@ -16,7 +16,6 @@ import { TOOLBAR_HEIGHT } from "../toolbar";
 export function Graph() {
 	const rem = useRem();
 	const graphContainer = useRef<Frame | undefined>();
-	const inputContainer = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
 	const guidesEnabled = useSelector(selectGuides);
 	const targetX = useTargetCapturer(graphContainer);
@@ -34,7 +33,6 @@ export function Graph() {
 
 	return (
 		<frame
-			ref={inputContainer}
 			Size={new UDim2(1, 0, 1, -rem(TOOLBAR_HEIGHT))}
 			Position={new UDim2(0, 0, 0, rem(TOOLBAR_HEIGHT))}
 			BackgroundTransparency={1}

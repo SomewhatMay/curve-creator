@@ -2,11 +2,11 @@ import React, { Binding, joinBindings, MutableRefObject, useBinding, useCallback
 import { useMotion } from "ui/hooks/use-motion";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
-import { config } from "@rbxts/ripple";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
 import { selectRounding } from "store/settings-slice";
+import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
 interface props {
 	graphContainer: MutableRefObject<Frame | undefined>;
@@ -26,8 +26,10 @@ export function Crosshair({ graphContainer, targetX }: props) {
 	const [markerAnimationY, markerMotionY] = useMotion(0);
 
 	useMouseMove(
-		graphContainer,
 		useCallback((position: Vector2) => {
+			if (graphContainer.current === undefined) return;
+			position = calculateRelativePosition(position, graphContainer.current, true);
+
 			motionX.spring(position.X, {
 				tension: 200,
 				friction: 20,

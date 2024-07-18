@@ -1,8 +1,9 @@
-import { MutableRefObject, useBinding } from "@rbxts/react";
+import { MutableRefObject, useBinding, useCallback } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
 import { useInputBegan } from "ui/hooks/use-input-began";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
+import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
 const MAX_TARGET_DISTANCE = 0.025;
 
@@ -10,27 +11,36 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 	const points = useSelector(selectPoints);
 	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
 
-	useMouseMove(graphContainer, (position: Vector2, input: InputObject) => {
-		if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
-			setTargetPointX(undefined);
-			return;
-		}
+	useMouseMove(
+		useCallback(
+			(position: Vector2, input: InputObject) => {
+				if (graphContainer.current === undefined) return;
 
-		let closestDist = MAX_TARGET_DISTANCE,
-			closestX = undefined;
+				if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
+					setTargetPointX(undefined);
+					return;
+				}
 
-		for (const [x, y] of pairs(points)) {
-			const dist = math.sqrt(math.pow(x - position.X, 2) + math.pow(1 - y - position.Y, 2));
-			if (dist <= closestDist) {
-				closestDist = dist;
-				closestX = x;
-			}
-		}
+				position = calculateRelativePosition(position, graphContainer.current, true);
 
-		setTargetPointX(closestX);
-	});
+				let closestDist = MAX_TARGET_DISTANCE,
+					closestX = undefined;
 
-	useInputBegan(graphContainer, (input) => {
+				for (const [x, y] of pairs(points)) {
+					const dist = math.sqrt(math.pow(x - position.X, 2) + math.pow(1 - y - position.Y, 2));
+					if (dist <= closestDist) {
+						closestDist = dist;
+						closestX = x;
+					}
+				}
+
+				setTargetPointX(closestX);
+			},
+			[points],
+		),
+	);
+
+	useInputBegan((input) => {
 		if (input.KeyCode === Enum.KeyCode.LeftShift) {
 			setTargetPointX(undefined);
 		}

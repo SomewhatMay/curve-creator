@@ -18,6 +18,23 @@ export function PointInfo({ selectedX }: props) {
 	const points = useSelector(selectPoints);
 	const selectedY = selectedX ? points[selectedX] : undefined;
 
+	let containerX = 0.5;
+	let containerY = 1;
+
+	if (selectedX && selectedX < 0.25) {
+		containerX = 0;
+		containerY = 0.5;
+	} else if (selectedX && selectedX > 0.75) {
+		containerX = 1;
+		containerY = 0.5;
+	}
+
+	if (selectedY && selectedY < 0.25) {
+		containerY = 1;
+	} else if (selectedY && selectedY > 0.75) {
+		containerY = 0;
+	}
+
 	const handleDelete = () => {
 		if (selectedX) removePoint(selectedX);
 	};
@@ -50,8 +67,17 @@ export function PointInfo({ selectedX }: props) {
 			AutoButtonColor={false}
 			Size={new UDim2(0, rem(135), 0, rem(65))}
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
-			AnchorPoint={new Vector2(0.5, 1)}
-			Position={selectedX ? new UDim2(selectedX, 0, 1 - selectedY!, -rem(8)) : new UDim2(0.5, 0, 0.25, 0)}
+			AnchorPoint={new Vector2(containerX, containerY)}
+			Position={
+				selectedX
+					? new UDim2(
+							selectedX,
+							rem(4) * (containerX === 0 ? 1 : containerX === 1 ? -1 : 0),
+							1 - selectedY!,
+							rem(4) * (containerY === 0 ? 1 : containerY === 1 ? -1 : 0),
+						)
+					: new UDim2(0.5, 0, 0.25, 0)
+			}
 			BackgroundTransparency={0}
 			BorderSizePixel={0}
 			Visible={selectedX !== undefined}

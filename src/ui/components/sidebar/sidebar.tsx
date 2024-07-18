@@ -6,6 +6,7 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
+import config from "config";
 
 export type SidebarOption = {
 	title: string;
@@ -80,6 +81,31 @@ export function Sidebar() {
 					{sidebarOptions.map((option, index) => (
 						<SidebarButton key={option.title} option={option} index={index} />
 					))}
+				</frame>
+				<frame
+					Size={new UDim2(1, 0, 0, rem(25))}
+					Position={new UDim2(0, 0, 1, 0)}
+					AnchorPoint={new Vector2(0, 1)}
+					ZIndex={10}
+					BackgroundTransparency={1}
+				>
+					<textlabel
+						Size={new UDim2(1, 0, 0, rem(10))}
+						Text={`v${config.version.major}.${config.version.minor}.${config.version.patch}`}
+						TextColor3={new Color3(0.65, 0.65, 0.65)}
+						RichText={true}
+						BackgroundTransparency={1}
+						TextScaled={true}
+					/>
+					<textlabel
+						Size={new UDim2(1, 0, 0, rem(10))}
+						Text="Developed by <font color='#dddddd'>SomewhatMay</font>"
+						TextColor3={new Color3(0.65, 0.65, 0.65)}
+						RichText={true}
+						BackgroundTransparency={1}
+						TextScaled={true}
+					/>
+					<uilistlayout Padding={new UDim(0, rem(5))} VerticalAlignment={Enum.VerticalAlignment.Bottom} />
 				</frame>
 				<FullPadding padding={rem(14)} PaddingTop={new UDim(0, rem(10))} />
 			</imagebutton>

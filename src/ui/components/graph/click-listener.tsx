@@ -1,7 +1,7 @@
 import React, { Binding, MutableRefObject, useEffect } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
-import { selectPoints, selectSelectedPoint } from "store/editor-slice";
+import { selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 
@@ -12,7 +12,8 @@ interface props {
 
 export function ClickListener({ targetX, graphContainer }: props) {
 	const points = useSelector(selectPoints);
-	const { selectPoint, setSettingsVisible, addPoint, setChanged } = useRootProducer();
+	const { setMovingPoint, selectPoint, setSettingsVisible, addPoint, setChanged } = useRootProducer();
+	const movingPoint = useSelector(selectMovingPoint);
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const selectedPoint = useSelector(selectSelectedPoint);
@@ -50,6 +51,11 @@ export function ClickListener({ targetX, graphContainer }: props) {
 					if (!points[relativeX]) {
 						addPoint(relativeX, 1 - relativeY);
 						setChanged(true);
+					}
+
+					if (movingPoint) {
+						setMovingPoint(false);
+						selectPoint(relativeX);
 					}
 				}
 			});

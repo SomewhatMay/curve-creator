@@ -14,7 +14,7 @@ interface props {
 
 export function PointInfo({ selectedX }: props) {
 	const rem = useRem();
-	const { selectPoint, addPoint, removePoint } = useRootProducer();
+	const { setMovingPoint, selectPoint, addPoint, removePoint } = useRootProducer();
 	const points = useSelector(selectPoints);
 	const selectedY = selectedX ? points[selectedX] : undefined;
 
@@ -38,6 +38,13 @@ export function PointInfo({ selectedX }: props) {
 		}
 	};
 
+	const handleMove = () => {
+		if (selectedX) {
+			removePoint(selectedX);
+			setMovingPoint(true);
+		}
+	};
+
 	return (
 		<imagebutton
 			AutoButtonColor={false}
@@ -48,19 +55,25 @@ export function PointInfo({ selectedX }: props) {
 			BackgroundTransparency={0}
 			BorderSizePixel={0}
 			Visible={selectedX !== undefined}
+			ZIndex={3}
 		>
-			<frame Size={new UDim2(1, 0, 0.5, 0)} BackgroundTransparency={1}>
+			<frame Size={new UDim2(1, 0, 0.5, 0)} BackgroundTransparency={1} ZIndex={3}>
 				<PointTextBox title="x" value={selectedX} valueUpdated={handleRepositionX} />
 				<PointTextBox title="y" value={selectedY} valueUpdated={handleRepositionY} />
 				<uilistlayout FillDirection={Enum.FillDirection.Horizontal} />
 			</frame>
-			<frame Size={new UDim2(1, 0, 0.45, 0)} Position={new UDim2(0, 0, 0.55, 0)} BackgroundTransparency={1}>
+			<frame
+				Size={new UDim2(1, 0, 0.45, 0)}
+				Position={new UDim2(0, 0, 0.55, 0)}
+				BackgroundTransparency={1}
+				ZIndex={3}
+			>
+				<PointButton icon="http://www.roblox.com/asset/?id=401280200" imageScale={0.6} clicked={handleMove} />
 				<PointButton
 					icon="http://www.roblox.com/asset/?id=15928976491"
 					imageScale={0.6}
 					clicked={handleDelete}
 				/>
-				{/* <PointButton icon="http://www.roblox.com/asset/?id=15928976491" imageScale={0.6} clicked={() => {}} /> */}
 				<uilistlayout
 					FillDirection={Enum.FillDirection.Horizontal}
 					HorizontalAlignment={Enum.HorizontalAlignment.Right}

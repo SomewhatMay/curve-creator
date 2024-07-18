@@ -4,6 +4,7 @@ import { RootState } from "store";
 interface EditorState {
 	Points: Record<number, number>;
 	SelectedPoint: number | undefined;
+	MovingPoint: boolean;
 }
 
 export const initialState: EditorState = {
@@ -11,11 +12,13 @@ export const initialState: EditorState = {
 		[0.5]: 0.5,
 	},
 	SelectedPoint: undefined,
+	MovingPoint: false,
 };
 
 export const selectPoints = (state: RootState) => state.editor.Points;
 export const selectPoint = (state: RootState, x: number) => state.editor.Points[x];
 export const selectSelectedPoint = (state: RootState) => state.editor.SelectedPoint;
+export const selectMovingPoint = (state: RootState) => state.editor.MovingPoint;
 
 export const selectOrderedPoints = () =>
 	createSelector(selectPoints, (Points) => {
@@ -52,9 +55,12 @@ export const editorSlice = createProducer(initialState, {
 		Points,
 		SelectedPoint: undefined,
 	}),
-
 	selectPoint: (state, x: number | undefined) => ({
 		...state,
 		SelectedPoint: x,
+	}),
+	setMovingPoint: (state, MovingPoint: boolean) => ({
+		...state,
+		MovingPoint,
 	}),
 });

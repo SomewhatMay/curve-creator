@@ -20,12 +20,13 @@ export function PointTextBox({ title, value, placeholder, valueUpdated }: props)
 	useEffect(() => setDisplayText(value ?? 0), [value]);
 
 	return (
-		<frame Size={new UDim2(0.5, 0, 1, 0)} BackgroundTransparency={1}>
+		<frame Size={new UDim2(0.5, 0, 1, 0)} BackgroundTransparency={1} ZIndex={3}>
 			<textlabel
 				Size={new UDim2(0.2, -rem(1), 1, 0)}
 				Text={title}
 				BackgroundTransparency={1}
 				TextColor3={new Color3(1, 1, 1)}
+				ZIndex={3}
 			/>
 			<textbox
 				Size={new UDim2(0.8, -rem(1), 1, 0)}
@@ -34,6 +35,7 @@ export function PointTextBox({ title, value, placeholder, valueUpdated }: props)
 				PlaceholderText={placeholder}
 				BackgroundColor3={Color3.fromRGB(36, 36, 36)}
 				TextColor3={new Color3(1, 1, 1)}
+				ZIndex={3}
 				Event={{
 					FocusLost: (rbx) => {
 						let cleaned = tonumber(rbx.Text.gsub("%s+", "")[0]) ?? 0;

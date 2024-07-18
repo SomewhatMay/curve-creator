@@ -16,31 +16,31 @@ export function PointInfo({ selectedX }: props) {
 	const rem = useRem();
 	const { setMovingPoint, selectPoint, addPoint, removePoint } = useRootProducer();
 	const points = useSelector(selectPoints);
-	const selectedY = selectedX ? points[selectedX] : undefined;
+	const selectedY = selectedX !== undefined ? points[selectedX] : undefined;
 
 	let containerX = 0.5;
 	let containerY = 1;
 
-	if (selectedX && selectedX < 0.25) {
+	if (selectedX !== undefined && selectedX < 0.25) {
 		containerX = 0;
 		containerY = 0.5;
-	} else if (selectedX && selectedX > 0.75) {
+	} else if (selectedX !== undefined && selectedX > 0.75) {
 		containerX = 1;
 		containerY = 0.5;
 	}
 
-	if (selectedY && selectedY < 0.25) {
+	if (selectedY !== undefined && selectedY < 0.25) {
 		containerY = 1;
-	} else if (selectedY && selectedY > 0.75) {
+	} else if (selectedY !== undefined && selectedY > 0.75) {
 		containerY = 0;
 	}
 
 	const handleDelete = () => {
-		if (selectedX) removePoint(selectedX);
+		if (selectedX !== undefined) removePoint(selectedX);
 	};
 
 	const handleRepositionX = (newX: number) => {
-		if (selectedX) {
+		if (selectedX !== undefined) {
 			removePoint(selectedX);
 			addPoint(newX, selectedY!);
 			selectPoint(newX);
@@ -48,7 +48,7 @@ export function PointInfo({ selectedX }: props) {
 	};
 
 	const handleRepositionY = (newY: number) => {
-		if (selectedX) {
+		if (selectedX !== undefined) {
 			removePoint(selectedX);
 			addPoint(selectedX, newY);
 			selectPoint(selectedX);
@@ -56,7 +56,7 @@ export function PointInfo({ selectedX }: props) {
 	};
 
 	const handleMove = () => {
-		if (selectedX) {
+		if (selectedX !== undefined) {
 			removePoint(selectedX);
 			setMovingPoint(true);
 		}
@@ -69,7 +69,7 @@ export function PointInfo({ selectedX }: props) {
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
 			AnchorPoint={new Vector2(containerX, containerY)}
 			Position={
-				selectedX
+				selectedX !== undefined
 					? new UDim2(
 							selectedX,
 							rem(4) * (containerX === 0 ? 1 : containerX === 1 ? -1 : 0),

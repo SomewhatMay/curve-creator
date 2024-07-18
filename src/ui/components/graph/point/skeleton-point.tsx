@@ -17,6 +17,7 @@ export function SkeletonPoint({ x, y, children }: props) {
 			AnchorPoint={new Vector2(0.5, 0.5)}
 			BorderSizePixel={1}
 			BackgroundColor3={new Color3(1, 1, 1)}
+			ZIndex={2}
 		>
 			{children}
 			<uicorner CornerRadius={new UDim(1, 0)} />

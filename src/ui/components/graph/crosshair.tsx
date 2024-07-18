@@ -78,6 +78,7 @@ export function Crosshair({ graphContainer, targetInfo }: props) {
 				Size={new UDim2(0, rem(1), 1, 0)}
 				// Position={animationX.map((x) => new UDim2(x, 0, 0, 0))}
 				// FIXME: This type assertion may cause lots of issues..
+				// UPDATE: It's not...? Let's not ask any more questions...
 				Position={joinBindings([animationX, targetInfo as unknown as Binding<number>]).map(
 					([animationX, info]) => new UDim2((info as unknown as TargetInfo).x ?? animationX ?? 0, 0, 0, 0),
 				)}

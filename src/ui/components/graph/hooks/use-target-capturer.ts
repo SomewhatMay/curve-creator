@@ -11,7 +11,10 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
 
 	useMouseMove(graphContainer, (position: Vector2, input: InputObject) => {
-		if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) return;
+		if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
+			setTargetPointX(undefined);
+			return;
+		}
 
 		let closestDist = MAX_TARGET_DISTANCE,
 			closestX = undefined;

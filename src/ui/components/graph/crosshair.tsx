@@ -18,7 +18,6 @@ export function Crosshair({ graphContainer, targetX }: props) {
 
 	const points = useSelector(selectPoints);
 	const rounding = useSelector(selectRounding);
-	const roundingMultiplier = 10 ** rounding;
 
 	const [animationX, motionX] = useMotion(0);
 	const [animationY, motionY] = useMotion(0);
@@ -89,7 +88,7 @@ export function Crosshair({ graphContainer, targetX }: props) {
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationX.map((x) => tostring(math.floor(x * 100) / 100))}
 					Text={joinBindings([animationX, targetX]).map(([x, targetX]) =>
-						tostring(math.floor((targetX ?? x ?? 0) * roundingMultiplier) / roundingMultiplier),
+						`%.${rounding}f`.format(targetX ?? x ?? 0),
 					)}
 				/>
 				<Rounded />
@@ -111,10 +110,7 @@ export function Crosshair({ graphContainer, targetX }: props) {
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationY.map((y) => tostring(math.floor(y * 100) / 100))}
 					Text={joinBindings([animationY, targetX]).map(([y, targetX]) =>
-						tostring(
-							math.floor(((targetX && points[targetX]) ?? y ?? 0) * roundingMultiplier) /
-								roundingMultiplier,
-						),
+						`%.${rounding}f`.format((targetX && points[targetX]) ?? y ?? 0),
 					)}
 				/>
 				<Rounded />

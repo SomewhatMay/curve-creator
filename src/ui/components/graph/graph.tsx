@@ -4,7 +4,7 @@ import { Grid } from "./grid";
 import { Point } from "./point";
 import { ClickListener } from "./click-listener";
 import { useSelector } from "@rbxts/react-reflex";
-import { selectPoints } from "store/editor-slice";
+import { selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { LinesContainer } from "./lines-container";
 import { Crosshair } from "./crosshair";
 import { useTargetCapturer } from "./hooks/use-target-capturer";
@@ -18,6 +18,7 @@ export function Graph() {
 	const points = useSelector(selectPoints);
 	const guidesEnabled = useSelector(selectGuides);
 	const targetX = useTargetCapturer(graphContainer);
+	const selectedPoint = useSelector(selectSelectedPoint);
 
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
@@ -43,7 +44,7 @@ export function Graph() {
 				{pointsDisplay}
 				<LinesContainer />
 				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
-				<PointInfo x={targetX} />
+				<PointInfo selectedX={selectedPoint} />
 			</frame>
 		</>
 	);

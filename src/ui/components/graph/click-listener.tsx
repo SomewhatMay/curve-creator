@@ -1,7 +1,7 @@
 import React, { Binding, MutableRefObject, useEffect } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
-import { selectPoints } from "store/editor-slice";
+import { selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 
@@ -12,10 +12,10 @@ interface props {
 
 export function ClickListener({ targetX, graphContainer }: props) {
 	const points = useSelector(selectPoints);
-	const { addPoint, setChanged } = useRootProducer();
+	const { selectPoint, setSettingsVisible, addPoint, setChanged } = useRootProducer();
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
-	const { setSettingsVisible } = useRootProducer();
+	const selectedPoint = useSelector(selectSelectedPoint);
 
 	useEffect(() => {
 		let clickConnection: RBXScriptConnection | undefined;
@@ -25,9 +25,16 @@ export function ClickListener({ targetX, graphContainer }: props) {
 				if (sidebarVisible) return;
 
 				if (input.UserInputType === Enum.UserInputType.MouseButton1) {
-					if (targetX.getValue() !== undefined) return;
 					if (settingsVisible) {
 						setSettingsVisible(false);
+						return;
+					}
+					if (targetX.getValue() !== undefined) {
+						selectPoint(targetX.getValue());
+						return;
+					}
+					if (selectedPoint !== undefined) {
+						selectPoint(undefined);
 						return;
 					}
 
@@ -51,7 +58,7 @@ export function ClickListener({ targetX, graphContainer }: props) {
 		return () => {
 			clickConnection?.Disconnect();
 		};
-	}, [graphContainer.current, sidebarVisible, settingsVisible]);
+	}, [graphContainer.current, sidebarVisible, settingsVisible, selectedPoint]);
 
 	return undefined;
 }

@@ -8,10 +8,11 @@ import { calculateHandlePos } from "ui/util/calculate-handle-pos";
 
 interface props {
 	targetX: Binding<number | undefined>;
+	targetHandle: Binding<number | undefined>;
 	graphContainer: MutableRefObject<Frame | undefined>;
 }
 
-export function ClickListener({ targetX, graphContainer }: props) {
+export function ClickListener({ targetX, graphContainer, targetHandle }: props) {
 	const points = useSelector(selectPoints);
 	const { setMovingPoint, selectPoint, setSettingsVisible, addPoint, setChanged } = useRootProducer();
 	const movingPoint = useSelector(selectMovingPoint);

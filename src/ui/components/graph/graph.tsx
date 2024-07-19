@@ -20,14 +20,14 @@ export function Graph() {
 	const graphContainer = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
 	const guidesEnabled = useSelector(selectGuides);
-	const targetX = useTargetCapturer(graphContainer);
+	const [targetX, targetHandle] = useTargetCapturer(graphContainer);
 	const selectedPoint = useSelector(selectSelectedPoint);
 
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
 
 		for (const [x, { y }] of pairs(points)) {
-			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} />);
+			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} targetHandle={targetHandle} />);
 		}
 
 		return pointsDisplay;
@@ -47,10 +47,12 @@ export function Graph() {
 				BackgroundTransparency={1}
 			>
 				<Grid />
-				<ClickListener targetX={targetX} graphContainer={graphContainer} />
+				<ClickListener targetX={targetX} graphContainer={graphContainer} targetHandle={targetHandle} />
 				{pointsDisplay}
 				<LinesContainer />
-				{guidesEnabled && <Crosshair targetX={targetX} graphContainer={graphContainer} />}
+				{guidesEnabled && (
+					<Crosshair targetX={targetX} targetHandle={targetHandle} graphContainer={graphContainer} />
+				)}
 				<PointInfo selectedX={selectedPoint} />
 				<PointMover graphicsContainer={graphContainer} />
 				<HandleContainer />

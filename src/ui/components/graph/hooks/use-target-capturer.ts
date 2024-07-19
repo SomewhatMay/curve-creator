@@ -3,14 +3,16 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { useInputBegan } from "ui/hooks/use-input-began";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
+import { calculateDistance } from "ui/util/calculate-distance";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
-const MAX_TARGET_DISTANCE = 0.025;
+const MAX_TARGET_DISTANCE = 0.015;
 
 export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undefined>) {
 	const points = useSelector(selectPoints);
 	const movingPoint = useSelector(selectMovingPoint);
 	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
+	const [targetHandle, setTargetHandle] = useBinding<number | undefined>(undefined); // in the range i[1, 2]
 
 	useMouseMove(
 		useCallback(
@@ -30,17 +32,40 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 				position = calculateRelativePosition(position, graphContainer.current, true);
 
 				let closestDist = MAX_TARGET_DISTANCE,
-					closestX = undefined;
+					closestX = undefined,
+					closestToHandle = undefined;
 
-				for (const [x, { y }] of pairs(points)) {
-					const dist = math.sqrt(math.pow(x - position.X, 2) + math.pow(1 - y - position.Y, 2));
+				for (const [x, { y, handle1, handle2 }] of pairs(points)) {
+					const dist = calculateDistance(x, y, position.X, 1 - position.Y);
+
 					if (dist <= closestDist) {
 						closestDist = dist;
 						closestX = x;
+						closestToHandle = undefined;
+					}
+
+					// Check if handles are closer
+					if (handle1) {
+						const handleDist = calculateDistance(handle1[0], handle1[1], position.X, 1 - position.Y);
+						if (handleDist < closestDist) {
+							closestDist = handleDist;
+							closestX = x;
+							closestToHandle = 1;
+						}
+					}
+
+					if (handle2) {
+						const handleDist = calculateDistance(handle2[0], handle2[1], position.X, 1 - position.Y);
+						if (handleDist < closestDist) {
+							closestDist = handleDist;
+							closestX = x;
+							closestToHandle = 2;
+						}
 					}
 				}
 
 				setTargetPointX(closestX);
+				setTargetHandle(closestToHandle);
 			},
 			[points],
 		),
@@ -52,5 +77,5 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 		}
 	});
 
-	return targetPointX;
+	return [targetPointX, targetHandle];
 }

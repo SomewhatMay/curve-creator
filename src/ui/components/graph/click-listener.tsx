@@ -1,7 +1,13 @@
 import React, { Binding, MutableRefObject, useEffect } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
-import { selectMovingInfo, selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
+import {
+	selectMovingHandle,
+	selectMovingInfo,
+	selectMovingPoint,
+	selectPoints,
+	selectSelectedPoint,
+} from "store/editor-slice";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 import { calculateHandlePos } from "ui/util/calculate-handle-pos";
@@ -17,6 +23,7 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 	const { setMovingPoint, selectPoint, setSettingsVisible, addPoint, setChanged } = useRootProducer();
 	const movingPoint = useSelector(selectMovingPoint);
 	const movingInfo = useSelector(selectMovingInfo);
+	const movingHandle = useSelector(selectMovingHandle);
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const selectedPoint = useSelector(selectSelectedPoint);
@@ -27,6 +34,12 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 			clickConnection = graphContainer.current.InputEnded.Connect((input) => {
 				if (!graphContainer.current) return;
 				if (sidebarVisible) return;
+				if (movingHandle) {
+					print("Cannot add point while moving handle");
+					return;
+				} else if (movingPoint) {
+					print("Not moving handle!");
+				}
 
 				if (input.UserInputType === Enum.UserInputType.MouseButton1) {
 					if (settingsVisible) {
@@ -88,7 +101,7 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 		return () => {
 			clickConnection?.Disconnect();
 		};
-	}, [graphContainer.current, sidebarVisible, settingsVisible, selectedPoint, movingPoint, movingInfo]);
+	}, [graphContainer.current, sidebarVisible, settingsVisible, selectedPoint, movingPoint, movingInfo, movingHandle]);
 
 	return undefined;
 }

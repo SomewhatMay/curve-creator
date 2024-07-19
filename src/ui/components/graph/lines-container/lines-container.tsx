@@ -3,8 +3,10 @@ import { useSelector, useSelectorCreator } from "@rbxts/react-reflex";
 import { selectOrderedPoints } from "store/editor-slice";
 import { Line } from "./line";
 import { selectFillBounds } from "store/settings-slice";
+import { useRem } from "ui/hooks/use-rem";
 
 export function LinesContainer() {
+	const rem = useRem();
 	const linesContainerFrame = useRef<Frame | undefined>();
 	const points = useSelectorCreator(selectOrderedPoints);
 	const fillBounds = useSelector(selectFillBounds);
@@ -58,7 +60,7 @@ export function LinesContainer() {
 
 			setLinesDisplay(linesDisplay);
 		}
-	}, [fillBounds, points, linesContainerFrame.current]);
+	}, [fillBounds, rem, points, linesContainerFrame.current]);
 
 	return (
 		<frame ref={linesContainerFrame} BackgroundTransparency={1} Size={new UDim2(1, 0, 1, 0)}>

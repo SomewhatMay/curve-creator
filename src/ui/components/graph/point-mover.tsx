@@ -17,7 +17,7 @@ export function PointMover({ graphicsContainer }: props) {
 	const mouseRelative =
 		graphicsContainer.current && calculateRelativePosition(mousePosition, graphicsContainer.current, true);
 
-	useMouseMove((pos) => setMousePosition(pos));
+	useMouseMove((pos) => movingPoint && setMousePosition(pos));
 
 	return (
 		movingPoint && (

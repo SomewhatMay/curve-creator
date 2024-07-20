@@ -133,7 +133,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 						if (targetHandle) {
 							n = points[targetX][`handle${targetHandle}` as "handle1" | "handle2"]![1];
 						} else {
-							n = targetX;
+							n = points[targetX].y;
 						}
 					} else if (y) {
 						n = y;

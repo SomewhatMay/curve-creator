@@ -15,7 +15,6 @@ interface EditorState {
 	SelectedPoint: number | undefined;
 	MovingPoint: boolean;
 	MovingInfo: MovingInfo | undefined;
-	MovingHandle: boolean;
 }
 
 export const initialState: EditorState = {
@@ -29,7 +28,6 @@ export const initialState: EditorState = {
 	SelectedPoint: undefined,
 	MovingPoint: false,
 	MovingInfo: undefined,
-	MovingHandle: false,
 };
 
 export const selectPoints = (state: RootState) => state.editor.Points;
@@ -37,7 +35,6 @@ export const selectPoint = (state: RootState, x: number) => state.editor.Points[
 export const selectSelectedPoint = (state: RootState) => state.editor.SelectedPoint;
 export const selectMovingPoint = (state: RootState) => state.editor.MovingPoint;
 export const selectMovingInfo = (state: RootState) => state.editor.MovingInfo;
-export const selectMovingHandle = (state: RootState) => state.editor.MovingHandle;
 
 export const selectOrderedPoints = () =>
 	createSelector(selectPoints, (Points) => {
@@ -82,13 +79,5 @@ export const editorSlice = createProducer(initialState, {
 		...state,
 		MovingPoint,
 		MovingInfo,
-	}),
-	setMovingHandle: (state, MovingHandle: boolean) => ({
-		...state,
-		MovingHandle,
-	}),
-	setHandle: (state, x: number, handleIndex: 1 | 2, handle: HandleInfo) => ({
-		...state,
-		Points: { ...state.Points, [x]: { ...state.Points[x], [`handle${handleIndex}`]: handle } },
 	}),
 });

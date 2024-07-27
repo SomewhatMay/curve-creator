@@ -1,9 +1,10 @@
-import React from "@rbxts/react";
+import { joinAnyBindings, toBinding } from "@rbxts/pretty-react-hooks";
+import React, { Binding } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 
 interface props extends React.PropsWithChildren {
-	x: number;
-	y: number;
+	x: number | Binding<number>;
+	y: number | Binding<number>;
 }
 
 export function SkeletonPoint({ x, y, children }: props) {
@@ -11,7 +12,7 @@ export function SkeletonPoint({ x, y, children }: props) {
 
 	return (
 		<frame
-			Position={new UDim2(x, 0, 1 - y, 0)}
+			Position={joinAnyBindings([x, y]).map(([x, y]) => new UDim2(x, 0, 1 - y, 0))}
 			Size={new UDim2(0, rem(4), 0, rem(4))}
 			BackgroundTransparency={0}
 			AnchorPoint={new Vector2(0.5, 0.5)}

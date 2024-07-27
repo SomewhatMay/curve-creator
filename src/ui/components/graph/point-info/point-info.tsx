@@ -15,7 +15,7 @@ interface props {
 
 export function PointInfo({ selectedX }: props) {
 	const rem = useRem();
-	const { setMovingPoint, selectPoint, addPoint, removePoint } = useRootProducer();
+	const { setMovingPoint, selectPoint, setHandle, addPoint, removePoint } = useRootProducer();
 	const points = useSelector(selectPoints);
 	const selectedY = selectedX !== undefined ? points[selectedX].y : undefined;
 
@@ -75,6 +75,14 @@ export function PointInfo({ selectedX }: props) {
 		}
 	};
 
+	const addHandles = () => {
+		if (selectedX !== undefined) {
+			const { y, handle1, handle2 } = points[selectedX];
+			setHandle(selectedX, 1, handle1 ?? [math.clamp(selectedX === 0 ? 0.1 : selectedX - 0.1, 0, 1), y]);
+			setHandle(selectedX, 2, handle2 ?? [math.clamp(selectedX === 0 ? 0.9 : selectedX + 0.1, 0, 1), y]);
+		}
+	};
+
 	return (
 		<imagebutton
 			AutoButtonColor={false}
@@ -107,12 +115,14 @@ export function PointInfo({ selectedX }: props) {
 				BackgroundTransparency={1}
 				ZIndex={3}
 			>
+				<PointButton icon="http://www.roblox.com/asset/?id=18673393832" imageScale={0.6} clicked={addHandles} />
 				<PointButton icon="http://www.roblox.com/asset/?id=401280200" imageScale={0.6} clicked={handleMove} />
 				<PointButton
 					icon="http://www.roblox.com/asset/?id=15928976491"
 					imageScale={0.6}
 					clicked={handleDelete}
 				/>
+
 				<uilistlayout
 					FillDirection={Enum.FillDirection.Horizontal}
 					HorizontalAlignment={Enum.HorizontalAlignment.Right}

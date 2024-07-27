@@ -1,11 +1,12 @@
-import React from "@rbxts/react";
+import React, { Binding } from "@rbxts/react";
 import { Rounded } from "ui/components/rounded";
 import { useRem } from "ui/hooks/use-rem";
 import { Line } from "../lines-container";
+import { joinAnyBindings } from "@rbxts/pretty-react-hooks";
 
 interface props {
-	handleX: number;
-	handleY: number;
+	handleX: number | Binding<number>;
+	handleY: number | Binding<number>;
 	pointX: number;
 	pointY: number;
 }
@@ -19,7 +20,9 @@ export function Handle({ handleX, handleY, pointX, pointY }: props) {
 		<>
 			<frame
 				AnchorPoint={new Vector2(0.5, 0.5)}
-				Position={new UDim2(0, handleX, 0, handleY)}
+				Position={joinAnyBindings([handleX, handleY]).map(
+					([handleX, handleY]) => new UDim2(0, handleX, 0, handleY),
+				)}
 				Size={new UDim2(0, rem(4), 0, rem(4))}
 				BackgroundColor3={handleColor}
 				ZIndex={2}

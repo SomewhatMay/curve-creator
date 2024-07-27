@@ -4,7 +4,7 @@ import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { useSelector } from "@rbxts/react-reflex";
-import { selectPoints } from "store/editor-slice";
+import { selectMovingHandle, selectMovingPoint, selectPoints } from "store/editor-slice";
 import { selectRounding } from "store/settings-slice";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
@@ -19,6 +19,8 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 
 	const points = useSelector(selectPoints);
 	const rounding = useSelector(selectRounding);
+	const movingHandle = useSelector(selectMovingHandle);
+	const movingPoint = useSelector(selectMovingPoint);
 
 	const [animationX, motionX] = useMotion(0);
 	const [animationY, motionY] = useMotion(0);
@@ -72,26 +74,46 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 		}, []),
 	);
 
+	const crosshairX = joinBindings([animationX, targetX, targetHandle]).map(([x, targetX, targetHandle]) => {
+		let n = 0;
+
+		if (targetX && points[targetX] && !movingHandle && !movingPoint) {
+			const handleInfo = targetHandle && points[targetX][`handle${targetHandle}` as "handle1" | "handle2"];
+			if (handleInfo) {
+				n = handleInfo[0];
+			} else {
+				n = targetX;
+			}
+		} else if (x) {
+			n = x;
+		}
+
+		return n;
+	});
+
+	const crosshairY = joinBindings([animationY, targetX, targetHandle]).map(([y, targetX, targetHandle]) => {
+		let n = 0;
+
+		if (targetX && points[targetX] && !movingHandle && !movingPoint) {
+			const handleInfo = targetHandle && points[targetX][`handle${targetHandle}` as "handle1" | "handle2"];
+			if (handleInfo) {
+				n = handleInfo[1];
+			} else {
+				n = points[targetX].y;
+			}
+		} else if (y) {
+			n = y;
+		}
+
+		return n;
+	});
+
 	return (
 		<>
 			<frame
 				Size={new UDim2(0, rem(1), 1, 0)}
 				// Position={animationX.map((x) => new UDim2(x, 0, 0, 0))}
-				Position={joinBindings([animationX, targetX, targetHandle]).map(([x, targetX, targetHandle]) => {
-					let n = 0;
-
-					if (targetX) {
-						if (targetHandle) {
-							n = points[targetX][`handle${targetHandle}` as "handle1" | "handle2"]![0];
-						} else {
-							n = targetX;
-						}
-					} else if (x) {
-						n = x;
-					}
-
-					return new UDim2(n, 0, 0, 0);
-				})}
+				Position={crosshairX.map((x) => new UDim2(x, 0, 0, 0))}
 				BackgroundTransparency={0.8}
 				BorderSizePixel={0}
 			>
@@ -102,21 +124,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 					TextSize={rem(6)}
 					TextColor3={new Color3(0.8, 0.8, 0.8)}
 					// Text={animationX.map((x) => tostring(math.floor(x * 100) / 100))}
-					Text={joinBindings([animationX, targetX, targetHandle]).map(([x, targetX, targetHandle]) => {
-						let n = 0;
-
-						if (targetX) {
-							if (targetHandle) {
-								n = points[targetX][`handle${targetHandle}` as "handle1" | "handle2"]![0];
-							} else {
-								n = targetX;
-							}
-						} else if (x) {
-							n = x;
-						}
-
-						return `%.${rounding}f`.format(n);
-					})}
+					Text={crosshairX.map((x) => `%.${rounding}f`.format(x))}
 				/>
 				<Rounded />
 			</frame>
@@ -126,21 +134,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 				// Position={joinBindings([animationY, targetX, targetHandle]).map(
 				// 	([y, targetX]) => new UDim2(0, 0, 1 - ((targetX && points[targetX].y) ?? y ?? 0), 0),
 				// )}
-				Position={joinBindings([animationY, targetX, targetHandle]).map(([y, targetX, targetHandle]) => {
-					let n = 0;
-
-					if (targetX) {
-						if (targetHandle) {
-							n = points[targetX][`handle${targetHandle}` as "handle1" | "handle2"]![1];
-						} else {
-							n = points[targetX].y;
-						}
-					} else if (y) {
-						n = y;
-					}
-
-					return new UDim2(0, 0, 1 - n, 0);
-				})}
+				Position={crosshairY.map((y) => new UDim2(0, 0, 1 - y, 0))}
 				BackgroundTransparency={0.8}
 				BorderSizePixel={0}
 			>
@@ -154,21 +148,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 					// Text={joinBindings([animationY, targetX, targetHandle]).map(([y, targetX]) =>
 					// 	`%.${rounding}f`.format((targetX && points[targetX].y) ?? y ?? 0),
 					// )}
-					Text={joinBindings([animationY, targetX, targetHandle]).map(([y, targetX, targetHandle]) => {
-						let n = 0;
-
-						if (targetX) {
-							if (targetHandle) {
-								n = points[targetX][`handle${targetHandle}` as "handle1" | "handle2"]![1];
-							} else {
-								n = targetX;
-							}
-						} else if (y) {
-							n = y;
-						}
-
-						return `%.${rounding}f`.format(n);
-					})}
+					Text={crosshairY.map((y) => `%.${rounding}f`.format(y))}
 				/>
 				<Rounded />
 			</frame>

@@ -12,7 +12,7 @@ import { Axes } from "./axes";
 import { selectGuides } from "store/settings-slice";
 import { PointInfo } from "./point-info";
 import { TOOLBAR_HEIGHT } from "../toolbar";
-import { PointMover } from "./point-mover";
+import { TargetMover } from "./target-mover";
 import { HandleContainer } from "./handle-container";
 
 export function Graph() {
@@ -20,14 +20,14 @@ export function Graph() {
 	const graphContainer = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
 	const guidesEnabled = useSelector(selectGuides);
-	const [targetX, targetHandle] = useTargetCapturer(graphContainer);
+	const { targetPointX, setTargetPointX, targetHandle, setTargetHandle } = useTargetCapturer(graphContainer);
 	const selectedPoint = useSelector(selectSelectedPoint);
 
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
 
 		for (const [x, { y }] of pairs(points)) {
-			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetX} targetHandle={targetHandle} />);
+			pointsDisplay.push(<Point key={"p" + x} x={x} y={y} targetX={targetPointX} targetHandle={targetHandle} />);
 		}
 
 		return pointsDisplay;
@@ -47,14 +47,20 @@ export function Graph() {
 				BackgroundTransparency={1}
 			>
 				<Grid />
-				<ClickListener targetX={targetX} graphContainer={graphContainer} targetHandle={targetHandle} />
+				<ClickListener
+					targetX={targetPointX}
+					setTargetX={setTargetPointX}
+					targetHandle={targetHandle}
+					setTargetHandle={setTargetHandle}
+					graphContainer={graphContainer}
+				/>
 				{pointsDisplay}
 				<LinesContainer />
 				{guidesEnabled && (
-					<Crosshair targetX={targetX} targetHandle={targetHandle} graphContainer={graphContainer} />
+					<Crosshair targetX={targetPointX} targetHandle={targetHandle} graphContainer={graphContainer} />
 				)}
 				<PointInfo selectedX={selectedPoint} />
-				<PointMover graphicsContainer={graphContainer} />
+				<TargetMover graphicsContainer={graphContainer} />
 				<HandleContainer />
 			</frame>
 			<uipadding

@@ -1,6 +1,6 @@
 import { MutableRefObject, useBinding, useCallback } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
-import { selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
+import { selectMovingHandle, selectMovingPoint, selectPoints, selectSelectedPoint } from "store/editor-slice";
 import { useInputBegan } from "ui/hooks/use-input-began";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { calculateDistance } from "ui/util/calculate-distance";
@@ -11,6 +11,7 @@ const MAX_TARGET_DISTANCE = 0.015;
 export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undefined>) {
 	const points = useSelector(selectPoints);
 	const movingPoint = useSelector(selectMovingPoint);
+	const movingHandle = useSelector(selectMovingHandle);
 	const [targetPointX, setTargetPointX] = useBinding<number | undefined>(undefined);
 	const [targetHandle, setTargetHandle] = useBinding<number | undefined>(undefined); // in the range i[1, 2]
 
@@ -21,11 +22,13 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 
 				if (input.IsModifierKeyDown(Enum.ModifierKey.Shift)) {
 					setTargetPointX(undefined);
+					setTargetHandle(undefined);
 					return;
 				}
 
-				if (movingPoint) {
+				if (movingPoint || movingHandle) {
 					setTargetPointX(undefined);
+					setTargetHandle(undefined);
 					return;
 				}
 
@@ -67,15 +70,16 @@ export function useTargetCapturer(graphContainer: MutableRefObject<Frame | undef
 				setTargetPointX(closestX);
 				setTargetHandle(closestToHandle);
 			},
-			[points],
+			[points, movingPoint, movingHandle],
 		),
 	);
 
 	useInputBegan((input) => {
 		if (input.KeyCode === Enum.KeyCode.LeftShift) {
 			setTargetPointX(undefined);
+			setTargetHandle(undefined);
 		}
 	});
 
-	return [targetPointX, targetHandle];
+	return { targetPointX, setTargetPointX, targetHandle, setTargetHandle };
 }

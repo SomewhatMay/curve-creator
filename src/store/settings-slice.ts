@@ -13,7 +13,7 @@ interface SettingsState {
 const initialState: SettingsState = {
 	Visible: false,
 
-	Resolution: 1,
+	Resolution: 100,
 	Rounding: 2, // [1, inf) rounding to that many decimal places
 	Guides: true,
 	FillBounds: true,

@@ -29,7 +29,7 @@ export function Handle({ handleX, handleY, pointX, pointY }: props) {
 			>
 				<uicorner CornerRadius={new UDim(1, 0)} />
 			</frame>
-			<Line x1={handleX} x2={pointX} y1={handleY} y2={pointY} color={handleColor} />
+			<Line x1={handleX} x2={pointX} y1={handleY} y2={pointY} color={handleColor} isHandle />
 		</>
 	);
 }

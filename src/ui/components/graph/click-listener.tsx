@@ -13,6 +13,7 @@ import { selectSidebarVisibility } from "store/plugin-slice";
 import { selectSettingsVisible } from "store/settings-slice";
 import { calculateHandlePos } from "ui/util/calculate-handle-pos";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
+import { useToggleHandles } from "./hooks/use-toggle-handles";
 
 interface props {
 	targetX: Binding<number | undefined>;
@@ -34,6 +35,7 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 		addPoint,
 		setChanged,
 	} = useRootProducer();
+	const toggleHandles = useToggleHandles();
 	const movingPoint = useSelector(selectMovingPoint);
 	const movingPointInfo = useSelector(selectMovingPointInfo);
 	const movingHandle = useSelector(selectMovingHandle);
@@ -100,6 +102,11 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 
 					const targetXValue = targetX.getValue();
 					if (targetXValue !== undefined) {
+						if (input.IsModifierKeyDown(Enum.ModifierKey.Ctrl)) {
+							toggleHandles(targetXValue);
+							return;
+						}
+
 						selectPoint(targetXValue);
 						return;
 					}

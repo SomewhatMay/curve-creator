@@ -23,7 +23,6 @@ export function Curve({ point0, point1, linesContainerFrame }: props) {
 	const segments = math.clamp(math.ceil(distance * resolution), 0, math.huge);
 
 	const lines = useMemo(() => {
-		print("Segments is now " + segments);
 		let lines: Element[] = [];
 
 		if (!handle1 && !handle2) {

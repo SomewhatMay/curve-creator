@@ -8,6 +8,7 @@ import { PointTextBox } from "./point-textbox";
 import { PointButton } from "./point-button";
 import { useRootProducer } from "store";
 import { calculateHandlePos } from "ui/util/calculate-handle-pos";
+import { useToggleHandles } from "../hooks/use-toggle-handles";
 
 interface props {
 	selectedX: number | undefined;
@@ -35,6 +36,8 @@ export function PointInfo({ selectedX }: props) {
 	} else if (selectedY !== undefined && selectedY > 0.75) {
 		containerY = 0;
 	}
+
+	const toggleHandles = useToggleHandles();
 
 	const handleDelete = () => {
 		if (selectedX !== undefined) removePoint(selectedX);
@@ -75,14 +78,6 @@ export function PointInfo({ selectedX }: props) {
 		}
 	};
 
-	const addHandles = () => {
-		if (selectedX !== undefined) {
-			const { y, handle1, handle2 } = points[selectedX];
-			setHandle(selectedX, 1, handle1 ?? [math.clamp(selectedX === 0 ? 0.1 : selectedX - 0.1, 0, 1), y]);
-			setHandle(selectedX, 2, handle2 ?? [math.clamp(selectedX === 0 ? 0.9 : selectedX + 0.1, 0, 1), y]);
-		}
-	};
-
 	return (
 		<imagebutton
 			AutoButtonColor={false}
@@ -115,7 +110,11 @@ export function PointInfo({ selectedX }: props) {
 				BackgroundTransparency={1}
 				ZIndex={3}
 			>
-				<PointButton icon="http://www.roblox.com/asset/?id=18673393832" imageScale={0.6} clicked={addHandles} />
+				<PointButton
+					icon="http://www.roblox.com/asset/?id=18673393832"
+					imageScale={0.6}
+					clicked={() => selectedX && toggleHandles(selectedX)}
+				/>
 				<PointButton icon="http://www.roblox.com/asset/?id=401280200" imageScale={0.6} clicked={handleMove} />
 				<PointButton
 					icon="http://www.roblox.com/asset/?id=15928976491"

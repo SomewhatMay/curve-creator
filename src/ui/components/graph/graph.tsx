@@ -9,7 +9,7 @@ import { LinesContainer } from "./lines-container";
 import { Crosshair } from "./crosshair";
 import { useTargetCapturer } from "./hooks/use-target-capturer";
 import { Axes } from "./axes";
-import { selectGuides } from "store/settings-slice";
+import { selectGuides, selectViewingMode } from "store/settings-slice";
 import { PointInfo } from "./point-info";
 import { TOOLBAR_HEIGHT } from "../toolbar";
 import { TargetMover } from "./target-mover";
@@ -18,10 +18,12 @@ import { HandleContainer } from "./handle-container";
 export function Graph() {
 	const rem = useRem();
 	const graphContainer = useRef<Frame | undefined>();
+
+	const { targetPointX, setTargetPointX, targetHandle, setTargetHandle } = useTargetCapturer(graphContainer);
 	const points = useSelector(selectPoints);
 	const guidesEnabled = useSelector(selectGuides);
-	const { targetPointX, setTargetPointX, targetHandle, setTargetHandle } = useTargetCapturer(graphContainer);
 	const selectedPoint = useSelector(selectSelectedPoint);
+	const viewingMode = useSelector(selectViewingMode);
 
 	const pointsDisplay = useMemo(() => {
 		const pointsDisplay: Element[] = [];
@@ -47,21 +49,25 @@ export function Graph() {
 				BackgroundTransparency={1}
 			>
 				<Grid />
-				<ClickListener
-					targetX={targetPointX}
-					setTargetX={setTargetPointX}
-					targetHandle={targetHandle}
-					setTargetHandle={setTargetHandle}
-					graphContainer={graphContainer}
-				/>
-				{pointsDisplay}
 				<LinesContainer />
 				{guidesEnabled && (
 					<Crosshair targetX={targetPointX} targetHandle={targetHandle} graphContainer={graphContainer} />
 				)}
-				<PointInfo selectedX={selectedPoint} />
-				<TargetMover graphicsContainer={graphContainer} />
-				<HandleContainer targetHandle={targetHandle} targetX={targetPointX} />
+				{!viewingMode && (
+					<>
+						{pointsDisplay}
+						<PointInfo selectedX={selectedPoint} />
+						<TargetMover graphicsContainer={graphContainer} />
+						<HandleContainer targetHandle={targetHandle} targetX={targetPointX} />
+						<ClickListener
+							targetX={targetPointX}
+							setTargetX={setTargetPointX}
+							targetHandle={targetHandle}
+							setTargetHandle={setTargetHandle}
+							graphContainer={graphContainer}
+						/>
+					</>
+				)}
 			</frame>
 			<uipadding
 				PaddingTop={new UDim(0, rem(14))}

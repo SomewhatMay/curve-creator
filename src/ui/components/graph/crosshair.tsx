@@ -5,7 +5,7 @@ import { Rounded } from "../rounded";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectMovingHandle, selectMovingPoint, selectPoints } from "store/editor-slice";
-import { selectRounding } from "store/settings-slice";
+import { selectRounding, selectViewingMode } from "store/settings-slice";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
 
 interface props {
@@ -21,6 +21,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 	const rounding = useSelector(selectRounding);
 	const movingHandle = useSelector(selectMovingHandle);
 	const movingPoint = useSelector(selectMovingPoint);
+	const viewingMode = useSelector(selectViewingMode);
 
 	const [animationX, motionX] = useMotion(0);
 	const [animationY, motionY] = useMotion(0);

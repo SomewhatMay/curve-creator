@@ -6,7 +6,7 @@ import { selectChanged, selectFileName, selectFileOpened } from "store/io-slice"
 import { TextService } from "@rbxts/services";
 import { ToolbarButton } from "./toolbar-button";
 import { useRootProducer } from "store";
-import { selectSettingsVisible } from "store/settings-slice";
+import { selectSettingsVisible, selectViewingMode } from "store/settings-slice";
 
 export const TOOLBAR_HEIGHT = 20;
 
@@ -18,8 +18,9 @@ export type ToolbarOption = {
 
 export function Toolbar() {
 	const rem = useRem();
-	const { setSettingsVisible } = useRootProducer();
+	const { setViewingMode, setSettingsVisible } = useRootProducer();
 	const settingsVisible = useSelector(selectSettingsVisible);
+	const viewingMode = useSelector(selectViewingMode);
 	const fileOpened = useSelector(selectFileOpened);
 	const fileName = useSelector(selectFileName);
 	const fileChanged = useSelector(selectChanged);
@@ -29,17 +30,24 @@ export function Toolbar() {
 	const toolbarOptions: ToolbarOption[] = useMemo(
 		() => [
 			{
-				icon: "http://www.roblox.com/asset/?id=6953989178", // graph icon: http://www.roblox.com/asset/?id=4460062809
+				icon: "http://www.roblox.com/asset/?id=6953989178",
 				tooltip: "Open settings",
 				handler: () => setSettingsVisible(!settingsVisible),
 			},
 			{
-				icon: "http://www.roblox.com/asset/?id=18247708237", // graph icon: http://www.roblox.com/asset/?id=4460062809
+				icon: "http://www.roblox.com/asset/?id=18247708237",
 				tooltip: "Open in table view",
 				handler: () => {},
 			},
+			{
+				icon: viewingMode
+					? "http://www.roblox.com/asset/?id=16417282974"
+					: "http://www.roblox.com/asset/?id=16060788318",
+				tooltip: "Open in viewing mode",
+				handler: () => setViewingMode(!viewingMode),
+			},
 		],
-		[settingsVisible, setSettingsVisible],
+		[settingsVisible, setSettingsVisible, viewingMode],
 	);
 
 	useEffect(() => {

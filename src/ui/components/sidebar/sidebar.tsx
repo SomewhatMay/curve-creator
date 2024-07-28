@@ -34,7 +34,7 @@ const sidebarOptions: SidebarOption[] = [
 	},
 	{
 		title: "Rename",
-		icon: "http://www.roblox.com/asset/?id=14189347195",
+		icon: "http://www.roblox.com/asset/?id=16417282974",
 	},
 ];
 

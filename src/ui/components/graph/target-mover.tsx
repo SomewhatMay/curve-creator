@@ -57,6 +57,7 @@ export function TargetMover({ graphicsContainer }: props) {
 								? (1 - points[movingHandleInfo!.pointX].y) * graphicsContainer.current.AbsoluteSize.Y
 								: 0
 						}
+						targetStroke={2}
 					/>
 				</>
 			)}

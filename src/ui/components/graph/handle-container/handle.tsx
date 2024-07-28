@@ -9,11 +9,12 @@ interface props {
 	handleY: number | Binding<number>;
 	pointX: number;
 	pointY: number;
+	targetStroke?: Binding<number> | number;
 }
 
 const handleColor = new Color3(0.49, 0.14, 0.14);
 
-export function Handle({ handleX, handleY, pointX, pointY }: props) {
+export function Handle({ handleX, handleY, pointX, pointY, targetStroke }: props) {
 	const rem = useRem();
 
 	return (
@@ -28,8 +29,13 @@ export function Handle({ handleX, handleY, pointX, pointY }: props) {
 				ZIndex={2}
 			>
 				<uicorner CornerRadius={new UDim(1, 0)} />
+				{targetStroke ? <uistroke Thickness={targetStroke} Color={Color3.fromRGB(33, 144, 255)} /> : undefined}
 			</frame>
-			<Line x1={handleX} x2={pointX} y1={handleY} y2={pointY} color={handleColor} isHandle />
+			<Line x1={handleX} x2={pointX} y1={handleY} y2={pointY} color={handleColor} isHandle>
+				{targetStroke ? (
+					<uistroke Thickness={targetStroke} Transparency={0.5} Color={Color3.fromRGB(33, 144, 255)} />
+				) : undefined}
+			</Line>
 		</>
 	);
 }

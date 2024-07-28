@@ -61,7 +61,7 @@ export function Graph() {
 				)}
 				<PointInfo selectedX={selectedPoint} />
 				<TargetMover graphicsContainer={graphContainer} />
-				<HandleContainer />
+				<HandleContainer targetHandle={targetHandle} targetX={targetPointX} />
 			</frame>
 			<uipadding
 				PaddingTop={new UDim(0, rem(14))}

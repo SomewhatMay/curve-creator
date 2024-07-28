@@ -1,9 +1,14 @@
-import React, { Element, useEffect, useRef, useState } from "@rbxts/react";
+import React, { Binding, Element, joinBindings, useEffect, useRef, useState } from "@rbxts/react";
 import { useSelector } from "@rbxts/react-reflex";
 import { selectPoints } from "store/editor-slice";
 import { Handle } from "./handle";
 
-export function HandleContainer() {
+interface props {
+	targetX: Binding<number | undefined>;
+	targetHandle: Binding<number | undefined>;
+}
+
+export function HandleContainer({ targetX, targetHandle }: props) {
 	const handlesContainerFrame = useRef<Frame | undefined>();
 	const points = useSelector(selectPoints);
 	const [handlesDisplay, setHandlesDisplay] = useState<Element[]>([]);
@@ -22,6 +27,9 @@ export function HandleContainer() {
 							handleY={(1 - handle1[1]) * absoluteSize.Y}
 							pointX={pointX * absoluteSize.X}
 							pointY={(1 - pointY) * absoluteSize.Y}
+							targetStroke={joinBindings([targetX, targetHandle]).map(([targetX, targetHandle]) =>
+								targetX === pointX && targetHandle === 1 ? 1 : 0,
+							)}
 						/>,
 					);
 				}
@@ -34,6 +42,9 @@ export function HandleContainer() {
 							handleY={(1 - handle2[1]) * absoluteSize.Y}
 							pointX={pointX * absoluteSize.X}
 							pointY={(1 - pointY) * absoluteSize.Y}
+							targetStroke={joinBindings([targetX, targetHandle]).map(([targetX, targetHandle]) =>
+								targetX === pointX && targetHandle === 2 ? 1 : 0,
+							)}
 						/>,
 					);
 				}

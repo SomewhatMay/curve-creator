@@ -8,12 +8,13 @@ import {
 	selectSelectedPoint,
 	selectMovingHandle,
 	selectMovingHandleInfo,
+	HandleInfo,
 } from "store/editor-slice";
 import { selectSidebarVisibility } from "store/plugin-slice";
-import { selectSettingsVisible } from "store/settings-slice";
+import { selectAutoAddHandles, selectSettingsVisible, selectViewingMode } from "store/settings-slice";
 import { calculateHandlePos } from "ui/util/calculate-handle-pos";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
-import { useToggleHandles } from "./hooks/use-toggle-handles";
+import { calculateHandleX, useToggleHandles } from "./hooks/use-toggle-handles";
 
 interface props {
 	targetX: Binding<number | undefined>;
@@ -43,6 +44,8 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 	const settingsVisible = useSelector(selectSettingsVisible);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const selectedPoint = useSelector(selectSelectedPoint);
+	const autoAddHandles = useSelector(selectAutoAddHandles);
+	const viewingMode = useSelector(selectViewingMode);
 
 	useEffect(() => {
 		let inputEndedConnection: RBXScriptConnection | undefined;
@@ -146,7 +149,9 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 						setMovingPoint(false);
 						selectPoint(relativeX);
 					} else if (!points[relativeX]) {
-						addPoint(relativeX, 1 - relativeY);
+						const handle1 = autoAddHandles ? [calculateHandleX(1, relativeX), 1 - relativeY] : undefined;
+						const handle2 = autoAddHandles ? [calculateHandleX(2, relativeX), 1 - relativeY] : undefined;
+						addPoint(relativeX, 1 - relativeY, handle1 as HandleInfo, handle2 as HandleInfo);
 					}
 				} else if (input.UserInputType === Enum.UserInputType.MouseButton2) {
 					if (settingsVisible) {
@@ -185,6 +190,8 @@ export function ClickListener({ targetX, graphContainer, targetHandle }: props) 
 		movingPointInfo,
 		movingHandle,
 		movingHandleInfo,
+		autoAddHandles,
+		viewingMode,
 	]);
 
 	return undefined;

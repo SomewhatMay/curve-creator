@@ -4,11 +4,18 @@ import { useRem } from "ui/hooks/use-rem";
 import { OptionGuides } from "./option-guides";
 import { OptionRounding } from "./option-rounding";
 import { OptionFillBounds } from "./option-fill-bounds";
+import { OptionAutoAddHandles } from "./option-auto-add-handles";
 
 export function SettingsOptions() {
 	const rem = useRem();
 	const options = useMemo(
-		() => [<OptionResolution />, <OptionRounding />, <OptionGuides />, <OptionFillBounds />],
+		() => [
+			<OptionResolution />,
+			<OptionRounding />,
+			<OptionGuides />,
+			<OptionFillBounds />,
+			<OptionAutoAddHandles />,
+		],
 		[],
 	);
 

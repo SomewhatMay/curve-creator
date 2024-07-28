@@ -13,7 +13,7 @@ export function OptionResolution() {
 
 	const handleChange = (rbx: TextBox, enterPressed: boolean) => {
 		let cleanedResolution = tonumber(rbx.Text.gsub("%s+", "")[0]);
-		cleanedResolution = math.clamp(cleanedResolution ?? 1, 1, 24);
+		cleanedResolution = math.clamp(cleanedResolution ?? 1, 1, 1024);
 
 		setResolution(cleanedResolution);
 		rerender();

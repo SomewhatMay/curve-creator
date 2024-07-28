@@ -20,7 +20,7 @@ export function Curve({ point0, point1, linesContainerFrame }: props) {
 	const distance = calculateDistance(point0.x, point0.y, point1.x, point1.y);
 
 	const resolution = useSelector(selectResolution);
-	const segments = math.clamp(math.ceil(distance * resolution), 0, math.huge);
+	const segments = math.clamp(math.ceil(distance * resolution), 1, math.huge);
 
 	const lines = useMemo(() => {
 		let lines: Element[] = [];

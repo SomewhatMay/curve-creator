@@ -54,7 +54,7 @@ export function SettingsWidget() {
 		<imagebutton
 			AutoButtonColor={false}
 			BackgroundColor3={Color3.fromRGB(41, 41, 41)}
-			Size={new UDim2(0, rem(150), 0, rem(200))}
+			Size={new UDim2(0, rem(170), 0, rem(200))}
 			AnchorPoint={new Vector2(1, 0)}
 			Position={animationGoal.map((x) => new UDim2(1 + (1 - x), -rem(4), 0, rem(28)))}
 			ZIndex={4}

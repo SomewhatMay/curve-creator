@@ -5,6 +5,8 @@ import { RootState } from "store";
 export type HandleInfo = [number, number] | undefined;
 export type MovingPointInfo = PointInfo & { x: number };
 export type MovingHandleInfo = { x: number; y: number; pointX: number };
+/** A point collection is always an ordered list */
+export type PointCollection = MovingPointInfo[];
 
 export type PointInfo = {
 	y: number;
@@ -23,10 +25,20 @@ interface EditorState {
 
 export const initialState: EditorState = {
 	Points: {
-		[0.5]: {
-			y: 0.5,
-			handle1: [0.3, 0.3],
-			handle2: [0.7, 0.7],
+		// [0.5]: {
+		// 	y: 0.5,
+		// 	handle1: [0.3, 0.3],
+		// 	handle2: [0.7, 0.7],
+		// },
+		[0.25]: {
+			y: 0.25,
+			handle1: undefined,
+			handle2: [0.5, 0.5],
+		},
+		[0.75]: {
+			y: 0.75,
+			handle1: undefined,
+			handle2: undefined,
 		},
 	},
 	SelectedPoint: undefined,
@@ -46,7 +58,7 @@ export const selectMovingHandleInfo = (state: RootState) => state.editor.MovingH
 
 export const selectOrderedPoints = () =>
 	createSelector(selectPoints, (Points) => {
-		const orderedPoints: MovingPointInfo[] = [];
+		const orderedPoints: PointCollection = [];
 
 		for (const [x, pointInfo] of pairs(Points)) {
 			orderedPoints.push({ x, y: pointInfo.y, handle1: pointInfo.handle1, handle2: pointInfo.handle2 });

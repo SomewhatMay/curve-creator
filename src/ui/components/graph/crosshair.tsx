@@ -3,10 +3,11 @@ import { useMotion } from "ui/hooks/use-motion";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
 import { useMouseMove } from "ui/hooks/use-mouse-move";
-import { useSelector } from "@rbxts/react-reflex";
-import { selectMovingHandle, selectMovingPoint, selectPoints } from "store/editor-slice";
+import { useSelector, useSelectorCreator } from "@rbxts/react-reflex";
+import { selectMovingHandle, selectMovingPoint, selectOrderedPoints, selectPoints } from "store/editor-slice";
 import { selectRounding, selectViewingMode } from "store/settings-slice";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
+import { calculateY } from "io/pair-calculator";
 
 interface props {
 	graphContainer: MutableRefObject<Frame | undefined>;
@@ -17,7 +18,7 @@ interface props {
 export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 	const rem = useRem();
 
-	const points = useSelector(selectPoints);
+	const points = useSelectorCreator(selectOrderedPoints);
 	const rounding = useSelector(selectRounding);
 	const movingHandle = useSelector(selectMovingHandle);
 	const movingPoint = useSelector(selectMovingPoint);
@@ -30,49 +31,57 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 	const [markerAnimationY, markerMotionY] = useMotion(0);
 
 	useMouseMove(
-		useCallback((position: Vector2) => {
-			if (graphContainer.current === undefined) return;
-			position = calculateRelativePosition(position, graphContainer.current, true);
+		useCallback(
+			(position: Vector2) => {
+				if (graphContainer.current === undefined) return;
+				position = calculateRelativePosition(position, graphContainer.current, true);
 
-			motionX.spring(position.X, {
-				tension: 200,
-				friction: 20,
-				mass: 0.5,
-			});
-			motionY.spring(1 - position.Y, {
-				tension: 200,
-				friction: 20,
-				mass: 0.5,
-			});
+				if (viewingMode) {
+					const intersectionY = calculateY(points, position.X);
+					position = new Vector2(position.X, 1 - intersectionY);
+				}
 
-			if (position.X > 0.25) {
-				markerMotionX.spring(1, {
+				motionX.spring(position.X, {
 					tension: 200,
 					friction: 20,
 					mass: 0.5,
 				});
-			} else {
-				markerMotionX.spring(0, {
+				motionY.spring(1 - position.Y, {
 					tension: 200,
 					friction: 20,
 					mass: 0.5,
 				});
-			}
 
-			if (position.Y > 0.75) {
-				markerMotionY.spring(1, {
-					tension: 200,
-					friction: 20,
-					mass: 0.5,
-				});
-			} else {
-				markerMotionY.spring(0, {
-					tension: 200,
-					friction: 20,
-					mass: 0.5,
-				});
-			}
-		}, []),
+				if (position.X > 0.25) {
+					markerMotionX.spring(1, {
+						tension: 200,
+						friction: 20,
+						mass: 0.5,
+					});
+				} else {
+					markerMotionX.spring(0, {
+						tension: 200,
+						friction: 20,
+						mass: 0.5,
+					});
+				}
+
+				if (position.Y > 0.75) {
+					markerMotionY.spring(1, {
+						tension: 200,
+						friction: 20,
+						mass: 0.5,
+					});
+				} else {
+					markerMotionY.spring(0, {
+						tension: 200,
+						friction: 20,
+						mass: 0.5,
+					});
+				}
+			},
+			[viewingMode],
+		), // not adding points to the dependency array because it should not need it?
 	);
 
 	const crosshairX = joinBindings([animationX, targetX, targetHandle]).map(([x, targetX, targetHandle]) => {

@@ -4,8 +4,8 @@ import { MovingPointInfo } from "store/editor-slice";
 import { selectResolution } from "store/settings-slice";
 import { Line } from "../line";
 import { calculateDistance } from "ui/util/calculate-distance";
+import { quadraticBezierPoint } from "./quadratic-bezier-point";
 import { cubicBezierPoint } from "./cubic-bezier-point";
-import { quarticBezierPoint } from "./quartic-bezier-point";
 
 interface props {
 	point0: MovingPointInfo;
@@ -40,7 +40,7 @@ export function Curve({ point0, point1, linesContainerFrame }: props) {
 
 			for (let i of $range(1, segments)) {
 				const t = i / segments;
-				const [x, y] = cubicBezierPoint(point0.x, point0.y, handle[0], handle[1], point1.x, point1.y, t);
+				const [x, y] = quadraticBezierPoint(point0.x, point0.y, handle[0], handle[1], point1.x, point1.y, t);
 				lines.push(
 					<Line
 						key={`l-${x}-${t}`}
@@ -57,7 +57,7 @@ export function Curve({ point0, point1, linesContainerFrame }: props) {
 
 			for (let i of $range(1, segments)) {
 				const t = i / segments;
-				const [x, y] = quarticBezierPoint(
+				const [x, y] = cubicBezierPoint(
 					point0.x,
 					point0.y,
 					handle1[0],

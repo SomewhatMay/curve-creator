@@ -76,7 +76,7 @@ export function calculateY(points: PointCollection, x: number): number {
 		previousPoint = point;
 	}
 
-	return 0;
+	return previousPoint ? previousPoint.y : 0;
 }
 
 export function lerp(a: number, b: number, t: number) {

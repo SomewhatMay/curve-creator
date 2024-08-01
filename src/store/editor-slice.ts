@@ -37,7 +37,7 @@ export const initialState: EditorState = {
 		},
 		[0.75]: {
 			y: 0.75,
-			handle1: undefined,
+			handle1: [0.5, 0.5],
 			handle2: undefined,
 		},
 	},

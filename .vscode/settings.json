@@ -9,5 +9,5 @@
 	},
 	"eslint.run": "onType",
 	"eslint.format.enable": true,
-	"cSpell.words": ["binded", "gsub", "imagelabel", "ipairs", "uiaspectratioconstraint", "uilistlayout"]
+	"cSpell.words": ["binded", "gsub", "imagelabel", "ipairs", "uiaspectratioconstraint", "uiflexitem", "uilistlayout"]
 }

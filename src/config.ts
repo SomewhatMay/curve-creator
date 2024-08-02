@@ -1,7 +1,7 @@
-export default {
+export = {
 	version: {
 		major: 0,
-		minor: 5,
+		minor: 2,
 		patch: 0,
 	},
 };

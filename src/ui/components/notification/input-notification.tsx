@@ -7,7 +7,7 @@ import { FullPadding } from "../full-padding";
 import { Rounded } from "../rounded";
 import { stringFit } from "ui/util/string-fit";
 
-interface props {
+export interface InputNotificationProps {
 	title: string;
 	label: string;
 	placeholder?: string;
@@ -15,7 +15,7 @@ interface props {
 	options: Option[];
 }
 
-export function InputNotification({ title, placeholder, label, saveDirectory, options }: props) {
+export function InputNotification({ title, placeholder, label, saveDirectory, options }: InputNotificationProps) {
 	const rem = useRem();
 	const [inputValue, setInputValue] = useBinding("");
 	/**

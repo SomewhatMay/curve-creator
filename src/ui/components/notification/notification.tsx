@@ -6,12 +6,12 @@ import { FullPadding } from "../full-padding";
 import { TextService } from "@rbxts/services";
 import { Option, OptionsContainer } from "./option-container";
 
-interface props {
+export interface NotificationProps {
 	message?: string;
 	options: Option[];
 }
 
-export function Notification({ message, options }: props) {
+export function Notification({ message, options }: NotificationProps) {
 	const rem = useRem();
 	const [messageHeight, setMessageHeight] = useBinding(0);
 

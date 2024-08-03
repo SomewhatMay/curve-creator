@@ -4,6 +4,7 @@ import { useProducer, UseProducerHook } from "@rbxts/react-reflex";
 import { ioSlice } from "./io-slice";
 import { settingsSlice } from "./settings-slice";
 import { editorSlice } from "./editor-slice";
+import { modalSlice } from "./modal-slice";
 
 export type RootProducer = typeof producer;
 
@@ -13,7 +14,8 @@ export const producer = combineProducers({
 	plugin: pluginSlice,
 	io: ioSlice,
 	settings: settingsSlice,
-	editor: editorSlice
+	editor: editorSlice,
+	modal: modalSlice,
 });
 
 export const useRootProducer: UseProducerHook<RootProducer> = useProducer;

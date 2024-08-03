@@ -1,6 +1,7 @@
 import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
-import { selectChanged, selectFileObject, selectFileParent } from "store/io-slice";
+import { selectChanged, selectFileName, selectFileObject, selectFileParent } from "store/io-slice";
+import { isUnchangedFileDirectory } from "ui/util/unchanged-file-directory";
 
 export function useNewFile() {
 	const saveFile = () => {
@@ -14,6 +15,7 @@ export function useNewFile() {
 		useRootProducer();
 
 	const fileChanged = useSelector(selectChanged);
+	const fileName = useSelector(selectFileName);
 	const fileObject = useSelector(selectFileObject);
 	const fileParent = useSelector(selectFileParent);
 
@@ -28,8 +30,9 @@ export function useNewFile() {
 		};
 
 		if (fileChanged) {
-			const targetSaveFunction =
-				fileObject && fileParent && fileObject.Parent === fileParent ? saveFile : saveFileAs;
+			const targetSaveFunction = isUnchangedFileDirectory(fileName, fileObject, fileParent)
+				? saveFile
+				: saveFileAs;
 
 			setNotification({
 				message: "You have unsaved changes. Do you want to save them?",

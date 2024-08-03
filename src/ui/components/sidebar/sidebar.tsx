@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "@rbxts/react";
+import React, { useEffect, useMemo, useState } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { FullPadding } from "../full-padding";
 import { SidebarButton } from "./sidebar-button";
@@ -7,42 +7,54 @@ import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
 import config from "config";
+import { useNewFile } from "ui/hooks/editor";
 
 export type SidebarOption = {
 	title: string;
 	icon: string;
+	handler: () => void;
 };
-
-const sidebarOptions: SidebarOption[] = [
-	{
-		title: "New",
-		icon: "http://www.roblox.com/asset/?id=15929013661",
-	},
-
-	{
-		title: "Load",
-		icon: "http://www.roblox.com/asset/?id=11768914234",
-	},
-
-	{
-		title: "Save",
-		icon: "http://www.roblox.com/asset/?id=12392895702",
-	},
-	{
-		title: "Save as",
-		icon: "http://www.roblox.com/asset/?id=12392895702",
-	},
-	{
-		title: "Rename",
-		icon: "http://www.roblox.com/asset/?id=16417282974",
-	},
-];
 
 export function Sidebar() {
 	const rem = useRem();
 	const [open, setOpen] = useMotor(0);
 	const sidebarVisible = useSelector(selectSidebarVisibility);
 	const { setSidebarVisible } = useRootProducer();
+
+	const newFile = useNewFile();
+
+	const sidebarOptions: SidebarOption[] = useMemo(
+		() => [
+			{
+				title: "New",
+				icon: "http://www.roblox.com/asset/?id=15929013661",
+				handler: newFile,
+			},
+
+			{
+				title: "Load",
+				icon: "http://www.roblox.com/asset/?id=11768914234",
+				handler: () => {},
+			},
+
+			{
+				title: "Save",
+				icon: "http://www.roblox.com/asset/?id=12392895702",
+				handler: () => {},
+			},
+			{
+				title: "Save as",
+				icon: "http://www.roblox.com/asset/?id=12392895702",
+				handler: () => {},
+			},
+			{
+				title: "Rename",
+				icon: "http://www.roblox.com/asset/?id=16417282974",
+				handler: () => {},
+			},
+		],
+		[newFile],
+	);
 
 	useEffect(() => {
 		if (sidebarVisible) {
@@ -79,7 +91,7 @@ export function Sidebar() {
 					ZIndex={10}
 				>
 					{sidebarOptions.map((option, index) => (
-						<SidebarButton key={option.title} option={option} index={index} />
+						<SidebarButton key={option.title} option={option} index={index} handler={option.handler} />
 					))}
 				</frame>
 				<frame

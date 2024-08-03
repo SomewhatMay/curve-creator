@@ -68,18 +68,16 @@ export function Toolbar() {
 				Text={displayName}
 			/>
 
-			{fileChanged && (
-				<textlabel
-					Text="  •  Unsaved changes"
-					Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT - 2))}
-					Position={fileNameSize.map((x) => new UDim2(0, x, 0, 0))}
-					TextSize={rem(10)}
-					FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
-					BackgroundTransparency={1}
-					TextXAlignment={Enum.TextXAlignment.Left}
-					TextColor3={new Color3(0.55, 0.55, 0.55)}
-				/>
-			)}
+			<textlabel
+				Text={fileChanged ? "  •  Unsaved changes" : "  •  Changes saved"}
+				Size={new UDim2(1, 0, 0, rem(TOOLBAR_HEIGHT - 2))}
+				Position={fileNameSize.map((x) => new UDim2(0, x, 0, 0))}
+				TextSize={rem(10)}
+				FontFace={Font.fromEnum(Enum.Font.GothamMedium)}
+				BackgroundTransparency={1}
+				TextXAlignment={Enum.TextXAlignment.Left}
+				TextColor3={new Color3(0.55, 0.55, 0.55)}
+			/>
 
 			<frame Size={new UDim2(0.5, 0, 0, rem(10))} Position={new UDim2(0.5, 0, 0, 0)} BackgroundTransparency={1}>
 				{toolbarOptions.map((option) => {

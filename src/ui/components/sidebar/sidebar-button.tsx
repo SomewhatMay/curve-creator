@@ -7,9 +7,10 @@ import { Rounded } from "../rounded";
 interface props {
 	option: SidebarOption;
 	index: number;
+	handler: () => void;
 }
 
-export function SidebarButton({ option, index }: props) {
+export function SidebarButton({ option, index, handler }: props) {
 	const [hovered, setHovered] = useMotor(0);
 	const rem = useRem();
 
@@ -23,6 +24,7 @@ export function SidebarButton({ option, index }: props) {
 			Event={{
 				MouseEnter: () => setHovered(new Spring(1)),
 				MouseLeave: () => setHovered(new Spring(0)),
+				MouseButton1Click: handler,
 			}}
 		>
 			<imagelabel

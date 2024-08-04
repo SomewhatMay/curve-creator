@@ -45,9 +45,17 @@ export function calculateY(points: PointCollection, x: number): number {
 						const i = math.sqrt(g ** 2 / 4 - h);
 						const j = cbrt(i);
 						const k = math.acos(-(g / (2 * i)));
+						const l = -j;
+						const m = math.cos(k / 3);
+						const n = math.sqrt(3) * math.sin(k / 3);
+						const p = -(b / (3 * a));
 
-						// We only need one valid root.
-						root = 2 * j * math.cos(k / 3) - b / (3 * a);
+						const root1 = 2 * j * math.cos(k / 3) - b / (3 * a);
+						const root2 = l * (m + n) + p;
+						const root3 = l * (m - n) + p;
+
+						// Find the root that is closest to x
+						root = [root1, root2, root3].find((t) => t >= 0 && t <= 1);
 					}
 
 					if (root !== undefined) {

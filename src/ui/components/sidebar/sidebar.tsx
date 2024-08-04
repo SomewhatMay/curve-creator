@@ -8,6 +8,7 @@ import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
 import { useNewFile, useSaveFile } from "ui/hooks/editor";
 import { getVersion } from "ui/util/get-version";
+import { useSaveFileAs } from "ui/hooks/editor/use-save-file-as";
 
 export type SidebarOption = {
 	title: string;
@@ -23,6 +24,7 @@ export function Sidebar() {
 
 	const newFile = useNewFile();
 	const saveFile = useSaveFile();
+	const saveFileAs = useSaveFileAs();
 
 	const sidebarOptions: SidebarOption[] = useMemo(
 		() => [
@@ -31,13 +33,11 @@ export function Sidebar() {
 				icon: "http://www.roblox.com/asset/?id=15929013661",
 				handler: newFile,
 			},
-
 			{
 				title: "Load",
 				icon: "http://www.roblox.com/asset/?id=11768914234",
 				handler: () => {},
 			},
-
 			{
 				title: "Save",
 				icon: "http://www.roblox.com/asset/?id=12392895702",
@@ -46,7 +46,7 @@ export function Sidebar() {
 			{
 				title: "Save as",
 				icon: "http://www.roblox.com/asset/?id=12392895702",
-				handler: () => {},
+				handler: () => saveFileAs(),
 			},
 			{
 				title: "Rename",

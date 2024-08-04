@@ -3,12 +3,11 @@ import { useRootProducer } from "store";
 import { selectChanged, selectFileName, selectFileObject, selectFileParent } from "store/io-slice";
 import { isUnchangedFileDirectory } from "ui/util/unchanged-file-directory";
 import { useSaveFile } from "./use-save-file";
+import { useSaveFileAs } from "./use-save-file-as";
 
 export function useNewFile() {
 	const saveFile = useSaveFile();
-	const saveFileAs = () => {
-		print("save file as");
-	};
+	const saveFileAs = useSaveFileAs();
 
 	const { clearPoints, setSidebarVisible, setChanged, setFileName, setFileOpened, setNotification } =
 		useRootProducer();

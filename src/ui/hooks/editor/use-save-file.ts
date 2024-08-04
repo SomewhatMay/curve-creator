@@ -5,13 +5,12 @@ import { selectOrderedPoints } from "store/editor-slice";
 import { selectFileName, selectFileObject, selectFileParent } from "store/io-slice";
 import { selectFillBounds } from "store/settings-slice";
 import { isUnchangedFileDirectory } from "ui/util/unchanged-file-directory";
+import { useSaveFileAs } from "./use-save-file-as";
 
 export function useSaveFile() {
-	const saveFileAs = () => {
-		print("save file as");
-	};
+	const saveFileAs = useSaveFileAs();
 
-	const { setChanged, setSidebarVisible } = useRootProducer();
+	const { setChanged, setSidebarVisible, setNotification } = useRootProducer();
 
 	const points = useSelectorCreator(selectOrderedPoints);
 	const fillBounds = useSelector(selectFillBounds);
@@ -21,11 +20,27 @@ export function useSaveFile() {
 	const fileParent = useSelector(selectFileParent);
 
 	return () => {
+		setSidebarVisible(false);
+
 		if (isUnchangedFileDirectory(fileName, fileObject, fileParent)) {
 			// Directory is unchanged and can be saved to the same file object
-			writeFile(fileObject as ModuleScript, { FillBounds: fillBounds, PointsData: points });
-			setChanged(false);
-			setSidebarVisible(false);
+			setNotification({
+				message: "Are you sure you want to overwrite the existing file?",
+				options: [
+					{
+						message: "Cancel",
+						handler: () => setNotification(undefined),
+					},
+					{
+						message: "Overwrite",
+						handler: () => {
+							setNotification(undefined);
+							writeFile(fileObject as ModuleScript, { FillBounds: fillBounds, PointsData: points });
+							setChanged(false);
+						},
+					},
+				],
+			});
 		} else {
 			// Directory has changed and needs to be 'saved as' again
 			saveFileAs();

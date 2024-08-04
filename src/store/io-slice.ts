@@ -36,4 +36,12 @@ export const ioSlice = createProducer(initialState, {
 		...state,
 		Changed,
 	}),
+	setFileObject: (state, FileObject: Instance | undefined) => ({
+		...state,
+		FileObject,
+	}),
+	setFileParent: (state, FileParent: Instance | undefined) => ({
+		...state,
+		FileParent,
+	}),
 });

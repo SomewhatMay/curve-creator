@@ -1,4 +1,4 @@
-import React, { useBinding, useMemo } from "@rbxts/react";
+import React, { useBinding, useEffect, useMemo, useRef } from "@rbxts/react";
 import { Option, OptionsContainer } from "./option-container";
 import { useRem } from "ui/hooks/use-rem";
 import { TextService } from "@rbxts/services";
@@ -11,19 +11,45 @@ export interface InputNotificationProps {
 	title: string;
 	label: string;
 	placeholder?: string;
+	value?: string;
 	saveDirectory?: Instance;
+	valueChanged: (value: string) => void;
 	options: Option[];
 }
 
-export function InputNotification({ title, placeholder, label, saveDirectory, options }: InputNotificationProps) {
+export function InputNotification({
+	title,
+	placeholder,
+	value,
+	valueChanged,
+	label,
+	saveDirectory,
+	options,
+}: InputNotificationProps) {
 	const rem = useRem();
-	const [inputValue, setInputValue] = useBinding("");
+	const [inputValue, _setInputValue] = useBinding(value);
+
+	const inputTextbox = useRef<TextBox | undefined>();
+
+	const setInputValue = (value: string) => {
+		_setInputValue(value);
+		valueChanged(value);
+	};
+
 	/**
 	 * 0 => smallest height
 	 * 1 => invalid name added
 	 * 2 => valid name (largest height)
 	 */
 	const heightEnum = inputValue.map((value) => (saveDirectory ? (value === "" ? 1 : 2) : 0));
+
+	useEffect(() => {
+		if (inputTextbox.current) {
+			inputTextbox.current.CaptureFocus();
+			inputTextbox.current.CursorPosition = inputTextbox.current.Text.size() + 1;
+			inputTextbox.current.SelectionStart = 1;
+		}
+	}, [inputValue]);
 
 	return (
 		<ModalContainer modalHeight={heightEnum.map((x) => (x === 0 ? rem(94) : x === 1 ? rem(113) : rem(135)))}>
@@ -55,12 +81,13 @@ export function InputNotification({ title, placeholder, label, saveDirectory, op
 					BorderSizePixel={0}
 				>
 					<textbox
+						ref={inputTextbox}
 						Size={new UDim2(1, 0, 1, 0)}
 						BackgroundTransparency={1}
 						TextColor3={new Color3(1, 1, 1)}
 						PlaceholderColor3={Color3.fromRGB(110, 110, 110)}
 						PlaceholderText={placeholder}
-						Text=""
+						Text={inputValue.map(tostring)}
 						TextXAlignment={Enum.TextXAlignment.Left}
 						TextYAlignment={Enum.TextYAlignment.Center}
 						ClearTextOnFocus={false}

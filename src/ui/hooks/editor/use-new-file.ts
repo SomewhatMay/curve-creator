@@ -2,11 +2,10 @@ import { useSelector } from "@rbxts/react-reflex";
 import { useRootProducer } from "store";
 import { selectChanged, selectFileName, selectFileObject, selectFileParent } from "store/io-slice";
 import { isUnchangedFileDirectory } from "ui/util/unchanged-file-directory";
+import { useSaveFile } from "./use-save-file";
 
 export function useNewFile() {
-	const saveFile = () => {
-		print("save file");
-	};
+	const saveFile = useSaveFile();
 	const saveFileAs = () => {
 		print("save file as");
 	};

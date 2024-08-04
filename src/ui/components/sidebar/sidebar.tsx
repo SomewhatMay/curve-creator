@@ -6,7 +6,7 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
-import { useNewFile } from "ui/hooks/editor";
+import { useNewFile, useSaveFile } from "ui/hooks/editor";
 import { getVersion } from "ui/util/get-version";
 
 export type SidebarOption = {
@@ -22,6 +22,7 @@ export function Sidebar() {
 	const { setSidebarVisible } = useRootProducer();
 
 	const newFile = useNewFile();
+	const saveFile = useSaveFile();
 
 	const sidebarOptions: SidebarOption[] = useMemo(
 		() => [
@@ -40,7 +41,7 @@ export function Sidebar() {
 			{
 				title: "Save",
 				icon: "http://www.roblox.com/asset/?id=12392895702",
-				handler: () => {},
+				handler: saveFile,
 			},
 			{
 				title: "Save as",

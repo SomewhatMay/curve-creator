@@ -9,5 +9,17 @@
 	},
 	"eslint.run": "onType",
 	"eslint.format.enable": true,
-	"cSpell.words": ["binded", "gsub", "imagelabel", "ipairs", "uiaspectratioconstraint", "uiflexitem", "uilistlayout"]
+	"cSpell.words": [
+		"assertf",
+		"binded",
+		"getfenv",
+		"gsub",
+		"imagelabel",
+		"ipairs",
+		"loadstring",
+		"setfenv",
+		"uiaspectratioconstraint",
+		"uiflexitem",
+		"uilistlayout"
+	]
 }

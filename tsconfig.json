@@ -17,6 +17,12 @@
 		"target": "ESNext",
 		"typeRoots": ["node_modules/@rbxts"],
 
+		"plugins": [
+			{
+				"transform": "rbxts-transformer-t-new"
+			}
+		],
+
 		// configurable
 		"types": ["types/plugin"],
 		"rootDir": "src",

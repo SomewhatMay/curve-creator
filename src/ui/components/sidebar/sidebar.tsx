@@ -6,8 +6,8 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
-import config from "config";
 import { useNewFile } from "ui/hooks/editor";
+import { getVersion } from "ui/util/get-version";
 
 export type SidebarOption = {
 	title: string;
@@ -103,7 +103,7 @@ export function Sidebar() {
 				>
 					<textlabel
 						Size={new UDim2(1, 0, 0, rem(10))}
-						Text={`v${config.version.major}.${config.version.minor}.${config.version.patch}`}
+						Text={getVersion()}
 						TextColor3={new Color3(0.65, 0.65, 0.65)}
 						RichText={true}
 						BackgroundTransparency={1}

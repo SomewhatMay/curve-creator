@@ -14,7 +14,7 @@
 
 local function cleanRequire(module: ModuleScript)
 	local source, errorMessage = loadstring(module.Source)
-	assert(source,`[CurveCreator]: A parsing error occurred while loading {module:GetFullName()}: {errorMessage}`)
+	assert(source,`A parsing error occurred while loading {module:GetFullName()}: {errorMessage}`)
 
 	local env = setmetatable({
 		script = module;
@@ -22,7 +22,7 @@ local function cleanRequire(module: ModuleScript)
 	}, { __index = getfenv() })
 
 	local success, data = pcall(setfenv(source, env))
-	assert(success,`[CurveCreator]: An error occurred while executing {module:GetFullName()}: {data}`)
+	assert(success,`An error occurred while executing {module:GetFullName()}: {data}`)
 
 	return data
 end

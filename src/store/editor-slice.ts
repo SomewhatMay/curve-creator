@@ -103,6 +103,23 @@ export const editorSlice = createProducer(initialState, {
 		MovingHandle: undefined,
 		MovingHandleInfo: undefined,
 	}),
+	setPointsCollection: (state, points: PointCollection) => {
+		const unorderedPoints: Record<number, PointInfo> = {};
+
+		for (const { x, y, handle1, handle2 } of points) {
+			unorderedPoints[x] = { y, handle1, handle2 };
+		}
+
+		return {
+			...state,
+			Points: unorderedPoints,
+			SelectedPoint: undefined,
+			MovingPoint: false,
+			MovingPointInfo: undefined,
+			MovingHandle: undefined,
+			MovingHandleInfo: undefined,
+		};
+	},
 	selectPoint: (state, x: number | undefined) => ({
 		...state,
 		SelectedPoint: x,

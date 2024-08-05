@@ -5,8 +5,9 @@ import { selectFillBounds } from "store/settings-slice";
 import { useRootProducer } from "store";
 
 export function OptionFillBounds() {
-	const fillBoundsEnabled = useSelector(selectFillBounds);
 	const { setFillBounds } = useRootProducer();
+	const fillBoundsEnabled = useSelector(selectFillBounds);
+
 	return (
 		<Toggle
 			title="Fill Bounds"

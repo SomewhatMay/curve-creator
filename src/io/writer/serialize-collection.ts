@@ -14,6 +14,7 @@ export function serializeCollection(collection: PointCollection) {
 	for (const [index, point] of pairs(collection)) {
 		result += "\n\t\t[" + index + "] = {";
 		result += "\n\t\t\ty = " + point.y + ",";
+		result += "\n\t\t\tx = " + point.x + ",";
 		result += point.handle1 ? "\n\t\t\thandle1 = " + serializeHandle(point.handle1) + "," : "";
 		result += point.handle2 ? "\n\t\t\thandle2 = " + serializeHandle(point.handle2) + "," : "";
 		result += "\n\t\t},";

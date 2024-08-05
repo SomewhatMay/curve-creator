@@ -17,8 +17,15 @@ import { selectFillBounds } from "store/settings-slice";
  * as it automatically calls this function when necessary.
  */
 export function useSaveFileAs() {
-	const { setChanged, setFileName, setFileObject, setFileParent, setSidebarVisible, setInputNotification } =
-		useRootProducer();
+	const {
+		setChanged,
+		setFileName,
+		setFileObject,
+		setFileOpened,
+		setFileParent,
+		setSidebarVisible,
+		setInputNotification,
+	} = useRootProducer();
 
 	const points = useSelectorCreator(selectOrderedPoints);
 	const fillBounds = useSelector(selectFillBounds);
@@ -65,6 +72,7 @@ export function useSaveFileAs() {
 						setFileParent(newFileParent);
 						setChanged(false);
 						Selection.Set([fileParent!]);
+						setFileOpened(true);
 					},
 				},
 			],

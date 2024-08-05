@@ -10,6 +10,7 @@ import { useNewFile, useSaveFile } from "ui/hooks/editor-hooks";
 import { getVersion } from "ui/util/get-version";
 import { useSaveFileAs } from "ui/hooks/editor-hooks";
 import { useRenameFile } from "ui/hooks/editor-hooks";
+import { useLoadFile } from "ui/hooks/editor-hooks/use-load-file";
 
 export type SidebarOption = {
 	title: string;
@@ -24,6 +25,7 @@ export function Sidebar() {
 	const { setSidebarVisible } = useRootProducer();
 
 	const newFile = useNewFile();
+	const loadFile = useLoadFile();
 	const saveFile = useSaveFile();
 	const saveFileAs = useSaveFileAs();
 	const renameFile = useRenameFile();
@@ -38,7 +40,7 @@ export function Sidebar() {
 			{
 				title: "Load",
 				icon: "http://www.roblox.com/asset/?id=11768914234",
-				handler: () => {},
+				handler: loadFile,
 			},
 			{
 				title: "Save",

@@ -2,11 +2,15 @@ import { FileData } from "io/writer";
 import { cleanRequire } from "./custom-require";
 import { validateData } from "./validate-data";
 
-interface Result {
-	success: boolean;
-	error?: string;
-	data?: FileData;
-}
+type Result =
+	| {
+			success: false;
+			error: string;
+	  }
+	| {
+			success: true;
+			data: FileData;
+	  };
 
 export function readFile(module: ModuleScript): Result {
 	try {

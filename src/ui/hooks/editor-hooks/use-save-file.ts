@@ -11,7 +11,7 @@ import { Selection } from "@rbxts/services";
 export function useSaveFile() {
 	const saveFileAs = useSaveFileAs();
 
-	const { setChanged, setSidebarVisible, setNotification } = useRootProducer();
+	const { setChanged, setSidebarVisible, setFileOpened, setNotification } = useRootProducer();
 
 	const points = useSelectorCreator(selectOrderedPoints);
 	const fillBounds = useSelector(selectFillBounds);
@@ -39,6 +39,7 @@ export function useSaveFile() {
 							writeFile(fileObject as ModuleScript, { FillBounds: fillBounds, PointsData: points });
 							setChanged(false);
 							Selection.Set([fileParent!]);
+							setFileOpened(true);
 						},
 					},
 				],

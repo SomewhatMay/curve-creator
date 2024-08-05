@@ -1,4 +1,4 @@
-import React, { useState } from "@rbxts/react";
+import React, { useEffect, useState } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
 import { FullPadding } from "../full-padding";
@@ -13,6 +13,8 @@ interface props {
 export function Toggle({ title, enabled, valueUpdated }: props) {
 	const rem = useRem();
 	const [animationGoal, setAnimationGoal] = useMotor(enabled ? 1 : 0);
+
+	useEffect(() => setAnimationGoal(enabled ? new Spring(1) : new Spring(0)), [enabled]);
 
 	const toggle = () => {
 		valueUpdated(!enabled);

@@ -1,11 +1,12 @@
 import React, { useBinding, useEffect, useMemo, useRef } from "@rbxts/react";
 import { Option, OptionsContainer } from "./option-container";
 import { useRem } from "ui/hooks/use-rem";
-import { TextService } from "@rbxts/services";
-import { ModalContainer } from "../modal-container";
+import { ReplicatedStorage, Selection, TextService } from "@rbxts/services";
+import { MODAL_WIDTH, ModalContainer } from "../modal-container";
 import { FullPadding } from "../full-padding";
 import { Rounded } from "../rounded";
 import { stringFit } from "ui/util/string-fit";
+import { joinAnyBindings, useEventListener } from "@rbxts/pretty-react-hooks";
 
 export interface InputNotificationProps {
 	title: string;
@@ -22,13 +23,16 @@ export function InputNotification({
 	placeholder,
 	value,
 	valueChanged,
+	saveDirectory: _saveDirectory,
 	label,
-	saveDirectory,
 	options,
 }: InputNotificationProps) {
 	const rem = useRem();
-	const [inputValue, _setInputValue] = useBinding(value);
 
+	const getSelection = () => Selection.Get()[0] ?? ReplicatedStorage;
+	const [saveDirectory, setSaveDirectory] = useBinding(_saveDirectory === game ? getSelection() : _saveDirectory);
+
+	const [inputValue, _setInputValue] = useBinding(value);
 	const inputTextbox = useRef<TextBox | undefined>();
 
 	const setInputValue = (value: string) => {
@@ -36,12 +40,18 @@ export function InputNotification({
 		valueChanged(value);
 	};
 
+	useEventListener(_saveDirectory === game ? Selection.SelectionChanged : undefined, () =>
+		setSaveDirectory(getSelection()),
+	);
+
 	/**
 	 * 0 => smallest height
 	 * 1 => invalid name added
 	 * 2 => valid name (largest height)
 	 */
-	const heightEnum = inputValue.map((value) => (saveDirectory ? (value === "" ? 1 : 2) : 0));
+	const heightEnum = joinAnyBindings([inputValue, saveDirectory]).map(([inputValue, saveDirectory]) =>
+		saveDirectory ? (inputValue === "" ? 1 : 2) : 0,
+	);
 
 	useEffect(() => {
 		if (inputTextbox.current) {
@@ -91,6 +101,7 @@ export function InputNotification({
 						TextXAlignment={Enum.TextXAlignment.Left}
 						TextYAlignment={Enum.TextYAlignment.Center}
 						ClearTextOnFocus={false}
+						ClipsDescendants
 						Change={{ Text: (rbx: TextBox) => setInputValue(rbx.Text) }}
 					/>
 					<FullPadding paddingX={new UDim(0, rem(4))} />
@@ -98,7 +109,7 @@ export function InputNotification({
 					<uistroke Thickness={rem(1)} Color={Color3.fromRGB(30, 30, 30)} />
 				</frame>
 
-				{saveDirectory && (
+				{saveDirectory.getValue() && (
 					<>
 						<textlabel
 							Text={inputValue.map((value) => `Please enter a valid ${label.lower()}.`)}
@@ -128,8 +139,15 @@ export function InputNotification({
 							RichText
 						/>
 						<textbutton
-							Text={inputValue.map((value) =>
-								stringFit(`${saveDirectory?.GetFullName()}.${value}`, 40, false),
+							Text={joinAnyBindings([inputValue, saveDirectory]).map(([inputValue, saveDirectory]) =>
+								stringFit(
+									`${saveDirectory?.GetFullName()}.${inputValue}`,
+									rem(MODAL_WIDTH - 20),
+									rem(9),
+									Enum.Font.GothamMedium,
+									true,
+									false,
+								),
 							)}
 							Position={new UDim2(0, 0, 0, rem(75))}
 							Size={new UDim2(1, 0, 0, rem(14))}
@@ -143,7 +161,7 @@ export function InputNotification({
 							RichText
 						/>
 						<textlabel
-							Text={inputValue.map((value) => "Select target parent through FileExplorer.")}
+							Text={"Select target parent through FileExplorer."}
 							Position={new UDim2(0, 0, 0, rem(88))}
 							Size={new UDim2(1, 0, 0, rem(14))}
 							TextSize={rem(9)}

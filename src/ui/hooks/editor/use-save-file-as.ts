@@ -38,7 +38,7 @@ export function useSaveFileAs() {
 			label: "Enter new file name",
 			value: fileName ?? "",
 			valueChanged: setCurrentFileName,
-			saveDirectory: ReplicatedStorage,
+			saveDirectory: game,
 			options: [
 				{
 					message: "Cancel",

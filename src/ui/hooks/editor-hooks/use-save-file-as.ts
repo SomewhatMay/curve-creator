@@ -27,7 +27,7 @@ export function useSaveFileAs() {
 	const fileObject = useSelector(selectFileObject);
 	const fileParent = useSelector(selectFileParent);
 
-	const [currentFileName, setCurrentFileName] = useBinding("");
+	const [currentFileName, setCurrentFileName] = useBinding(fileName ?? "");
 
 	return () => {
 		setSidebarVisible(false);
@@ -64,6 +64,7 @@ export function useSaveFileAs() {
 						setFileObject(newFileObject);
 						setFileParent(newFileParent);
 						setChanged(false);
+						Selection.Set([fileParent!]);
 					},
 				},
 			],

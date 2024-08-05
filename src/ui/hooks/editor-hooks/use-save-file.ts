@@ -6,6 +6,7 @@ import { selectFileName, selectFileObject, selectFileParent } from "store/io-sli
 import { selectFillBounds } from "store/settings-slice";
 import { isUnchangedFileDirectory } from "ui/util/unchanged-file-directory";
 import { useSaveFileAs } from "./use-save-file-as";
+import { Selection } from "@rbxts/services";
 
 export function useSaveFile() {
 	const saveFileAs = useSaveFileAs();
@@ -37,6 +38,7 @@ export function useSaveFile() {
 							setNotification(undefined);
 							writeFile(fileObject as ModuleScript, { FillBounds: fillBounds, PointsData: points });
 							setChanged(false);
+							Selection.Set([fileParent!]);
 						},
 					},
 				],

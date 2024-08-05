@@ -18,9 +18,16 @@ export interface InputNotificationProps {
 	options: Option[];
 }
 
+/**
+ * InputNotification
+ *
+ * @param saveDirectory - The directory where the file should be saved internally.
+ * 						If set to game, the Selection service will be used.
+ * 						If left to undefined, the user will not see anything about the save directory.
+ */
 export function InputNotification({
 	title,
-	placeholder,
+	placeholder = "Type here...",
 	value,
 	valueChanged,
 	saveDirectory: _saveDirectory,

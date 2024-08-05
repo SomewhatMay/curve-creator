@@ -6,9 +6,10 @@ import { useSelector } from "@rbxts/react-reflex";
 import { selectSidebarVisibility } from "store/plugin-slice";
 import { Spring, useMotor } from "@rbxts/pretty-react-hooks";
 import { useRootProducer } from "store";
-import { useNewFile, useSaveFile } from "ui/hooks/editor";
+import { useNewFile, useSaveFile } from "ui/hooks/editor-hooks";
 import { getVersion } from "ui/util/get-version";
-import { useSaveFileAs } from "ui/hooks/editor/use-save-file-as";
+import { useSaveFileAs } from "ui/hooks/editor-hooks";
+import { useRenameFile } from "ui/hooks/editor-hooks";
 
 export type SidebarOption = {
 	title: string;
@@ -25,6 +26,7 @@ export function Sidebar() {
 	const newFile = useNewFile();
 	const saveFile = useSaveFile();
 	const saveFileAs = useSaveFileAs();
+	const renameFile = useRenameFile();
 
 	const sidebarOptions: SidebarOption[] = useMemo(
 		() => [
@@ -46,12 +48,12 @@ export function Sidebar() {
 			{
 				title: "Save as",
 				icon: "http://www.roblox.com/asset/?id=12392895702",
-				handler: () => saveFileAs(),
+				handler: saveFileAs,
 			},
 			{
 				title: "Rename",
 				icon: "http://www.roblox.com/asset/?id=16417282974",
-				handler: () => {},
+				handler: renameFile,
 			},
 		],
 		[newFile],

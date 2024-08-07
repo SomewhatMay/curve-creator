@@ -23,14 +23,15 @@ export function App() {
 			BackgroundTransparency={0}
 			BorderSizePixel={0}
 		>
-			<Navbar />
 			{notificationProps && <Notification {...notificationProps} />}
-			{inputNotificationProps && <InputNotification {...inputNotificationProps} />}
+			{inputNotificationProps && <InputNotification key={"InputNotification"} {...inputNotificationProps} />}
+			<Navbar key={"Navbar"} />
 			<frame
 				Size={new UDim2(1, 0, 1, -rem(NAVBAR_HEIGHT))}
 				Position={new UDim2(0, 0, 0, rem(NAVBAR_HEIGHT))}
 				BackgroundTransparency={1}
 				ClipsDescendants={true}
+				key={"MainCanvas"}
 			>
 				<Sidebar />
 				<Toolbar />

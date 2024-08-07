@@ -1,4 +1,4 @@
-import React, { useBinding, useMemo } from "@rbxts/react";
+import React, { useBinding, useEffect, useMemo } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
 import { Rounded } from "../rounded";
 import { MODAL_WIDTH, ModalContainer } from "../modal-container";

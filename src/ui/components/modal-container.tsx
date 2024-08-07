@@ -10,9 +10,9 @@ interface props extends React.PropsWithChildren {
 
 export const MODAL_WIDTH = 220;
 
-export function ModalContainer({ modalHeight, children }: props) {
+export function ModalContainer({ modalHeight: _modalHeight, children }: props) {
 	const rem = useRem();
-	modalHeight = useMemo(() => toBinding(modalHeight ?? 150), [modalHeight]);
+	const modalHeight = useMemo(() => toBinding(_modalHeight ?? 150), [_modalHeight]);
 
 	return (
 		<>

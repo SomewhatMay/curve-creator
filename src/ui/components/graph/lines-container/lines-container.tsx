@@ -1,12 +1,13 @@
-import React, { Element, MutableRefObject, useEffect, useRef, useState } from "@rbxts/react";
+import React, { Element, MutableRefObject, useEffect, useMemo, useRef, useState } from "@rbxts/react";
 import { useSelector, useSelectorCreator } from "@rbxts/react-reflex";
-import { MovingPointInfo, selectOrderedPoints } from "store/editor-slice";
+import { MovingPointInfo, selectOrderedPoints, selectPoint, selectPoints } from "store/editor-slice";
 import { Line } from "./line";
 import { selectFillBounds } from "store/settings-slice";
 import { Curve } from "./curve";
 
 export function LinesContainer() {
 	const linesContainerFrame = useRef<Frame | undefined>();
+	const _points = useSelector(selectPoints);
 	const points = useSelectorCreator(selectOrderedPoints);
 	const fillBounds = useSelector(selectFillBounds);
 	const [linesDisplay, setLinesDisplay] = useState<Element[]>([]);
@@ -66,7 +67,7 @@ export function LinesContainer() {
 
 			setLinesDisplay(linesDisplay);
 		}
-	}, [fillBounds, points, linesContainerFrame.current]);
+	}, [fillBounds, points, _points]);
 
 	return (
 		<frame ref={linesContainerFrame} BackgroundTransparency={1} Size={new UDim2(1, 0, 1, 0)}>

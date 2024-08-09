@@ -11,6 +11,7 @@ import { getVersion } from "ui/util/get-version";
 import { useSaveFileAs } from "ui/hooks/editor-hooks";
 import { useRenameFile } from "ui/hooks/editor-hooks";
 import { useLoadFile } from "ui/hooks/editor-hooks/use-load-file";
+import { useDownloadCalculator } from "ui/hooks/editor-hooks/use-download-calculator";
 
 export type SidebarOption = {
 	title: string;
@@ -29,6 +30,7 @@ export function Sidebar() {
 	const saveFile = useSaveFile();
 	const saveFileAs = useSaveFileAs();
 	const renameFile = useRenameFile();
+	const downloadCalculator = useDownloadCalculator();
 
 	const sidebarOptions: SidebarOption[] = useMemo(
 		() => [
@@ -51,6 +53,11 @@ export function Sidebar() {
 				title: "Save as",
 				icon: "http://www.roblox.com/asset/?id=12392895702",
 				handler: saveFileAs,
+			},
+			{
+				title: "Place Calculator",
+				icon: "http://www.roblox.com/asset/?id=9405930424",
+				handler: downloadCalculator,
 			},
 			{
 				title: "Rename",

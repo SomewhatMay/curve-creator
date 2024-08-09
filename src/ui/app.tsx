@@ -8,13 +8,15 @@ import { Graph } from "./components/graph";
 import { Notification } from "./components/notification";
 import { InputNotification } from "./components/notification/input-notification";
 import { useSelector } from "@rbxts/react-reflex";
-import { selectInputNotification, selectNotification } from "store/modal-slice";
+import { selectInputNotification, selectNotification, selectTutorialNotification } from "store/modal-slice";
+import { TutorialNotification } from "./components/notification/tutorial-notification";
 
 export function App() {
 	const rem = useRem();
 
 	const notificationProps = useSelector(selectNotification);
 	const inputNotificationProps = useSelector(selectInputNotification);
+	const tutorialNotificationProps = useSelector(selectTutorialNotification);
 
 	return (
 		<frame
@@ -25,6 +27,9 @@ export function App() {
 		>
 			{notificationProps && <Notification {...notificationProps} />}
 			{inputNotificationProps && <InputNotification key={"InputNotification"} {...inputNotificationProps} />}
+			{tutorialNotificationProps && (
+				<TutorialNotification key={"TutorialNotification"} {...tutorialNotificationProps} />
+			)}
 			<Navbar key={"Navbar"} />
 			<frame
 				Size={new UDim2(1, 0, 1, -rem(NAVBAR_HEIGHT))}

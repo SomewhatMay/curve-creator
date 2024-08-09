@@ -1,4 +1,4 @@
-import { quadraticBezier } from "io/pair-calculator";
+import { quadraticBezier } from "io/curve-calculator";
 
 export function quadraticBezierPoint(
 	x1: number,

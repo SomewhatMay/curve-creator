@@ -7,7 +7,7 @@ import { useSelector, useSelectorCreator } from "@rbxts/react-reflex";
 import { selectMovingHandle, selectMovingPoint, selectOrderedPoints, selectPoints } from "store/editor-slice";
 import { selectRounding, selectViewingMode } from "store/settings-slice";
 import { calculateRelativePosition } from "ui/util/calculate-relative-position";
-import { calculateY } from "io/pair-calculator";
+import { calculate } from "io/curve-calculator";
 
 interface props {
 	graphContainer: MutableRefObject<Frame | undefined>;
@@ -37,7 +37,7 @@ export function Crosshair({ graphContainer, targetX, targetHandle }: props) {
 				position = calculateRelativePosition(position, graphContainer.current, true);
 
 				if (viewingMode) {
-					const intersectionY = calculateY(points, position.X);
+					const intersectionY = calculate(points, position.X);
 					position = new Vector2(position.X, 1 - intersectionY);
 				}
 

@@ -1,6 +1,17 @@
-import { PointCollection } from "store/editor-slice";
+// Developed By SomewhatMay
+// August 8, 2024
 
-export function calculateY(points: PointCollection, x: number): number {
+import { PointCollection } from "store/editor-slice";
+import { FileData } from "./writer";
+
+export function calculate(pointCollection: PointCollection | FileData, x: number): number {
+	assert(typeIs(pointCollection, "table"), "argument 1: points must be a table");
+	assert(typeIs(x, "number"), "argument 2: x must be a number");
+
+	let points = (pointCollection as FileData).PointsData || (pointCollection as PointCollection);
+
+	assert(typeIs(next(points), "table"), "argument 1: not a valid PointCollection!");
+
 	if (points.size() === 0) return 0;
 
 	x = math.clamp(x, 0, 1);

@@ -6,11 +6,12 @@ import { toBinding } from "@rbxts/pretty-react-hooks";
 
 interface props extends React.PropsWithChildren {
 	modalHeight?: number | Binding<number>;
+	modalWidth?: number;
 }
 
 export const MODAL_WIDTH = 220;
 
-export function ModalContainer({ modalHeight: _modalHeight, children }: props) {
+export function ModalContainer({ modalHeight: _modalHeight, modalWidth = MODAL_WIDTH, children }: props) {
 	const rem = useRem();
 	const modalHeight = useMemo(() => toBinding(_modalHeight ?? 150), [_modalHeight]);
 
@@ -19,7 +20,7 @@ export function ModalContainer({ modalHeight: _modalHeight, children }: props) {
 			<frame
 				AnchorPoint={new Vector2(0.5, 0.5)}
 				// The + 12 represents the padding around the modal
-				Size={modalHeight.map((height) => new UDim2(0, rem(MODAL_WIDTH + 20), 0, height + rem(28)))}
+				Size={modalHeight.map((height) => new UDim2(0, rem(modalWidth + 20), 0, height + rem(28)))}
 				Position={new UDim2(0.5, 0, 0.5, 0)}
 				BorderSizePixel={0}
 				BackgroundColor3={Color3.fromRGB(41, 41, 41)}

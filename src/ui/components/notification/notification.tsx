@@ -1,8 +1,6 @@
 import React, { useBinding, useEffect, useMemo } from "@rbxts/react";
 import { useRem } from "ui/hooks/use-rem";
-import { Rounded } from "../rounded";
 import { MODAL_WIDTH, ModalContainer } from "../modal-container";
-import { FullPadding } from "../full-padding";
 import { TextService } from "@rbxts/services";
 import { Option, OptionsContainer } from "./option-container";
 

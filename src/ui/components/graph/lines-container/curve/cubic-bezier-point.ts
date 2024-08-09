@@ -1,4 +1,4 @@
-import { cubicBezier } from "io/pair-calculator";
+import { cubicBezier } from "io/curve-calculator";
 
 export function cubicBezierPoint(
 	x0: number,

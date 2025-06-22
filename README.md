@@ -69,15 +69,19 @@ Internally, the library solves cubic roots for parameterized Bézier segments an
 ### Interface Screenshots
 
 _Curve editor with plotted points and Bézier handles_
+
 ![](https://ik.imagekit.io/somewhatmay/project-outline-images/curve-creator/RobloxStudioBeta_wLwvxKzzXs.png)
 
 _Settings menu with toggles and numeric fields_
+
 ![](https://ik.imagekit.io/somewhatmay/project-outline-images/curve-creator/RobloxStudioBeta_06RD2x3Thi.png)
 
 _File menu showing save/load operations_
+
 ![](https://ik.imagekit.io/somewhatmay/project-outline-images/curve-creator/RobloxStudioBeta_oXCJwou2xv.png)
 
 _Readonly visualization mode toggle_
+
 ![](https://ik.imagekit.io/somewhatmay/project-outline-images/curve-creator/RobloxStudioBeta_MDTrYHMMUs.png)
 
 ### Demo Video

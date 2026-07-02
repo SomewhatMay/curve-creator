@@ -80,11 +80,13 @@ export function InputNotification({
 					Font={Enum.Font.GothamMedium}
 					TextColor3={new Color3(1, 1, 1)}
 					RichText
+					ZIndex={15}
 				/>
 				<textlabel
 					Text={label}
 					Position={new UDim2(0, 0, 0, rem(20))}
 					Size={new UDim2(1, 0, 0, rem(14))}
+					ZIndex={15}
 					TextColor3={new Color3(1, 1, 1)}
 					BackgroundTransparency={1}
 					TextSize={rem(11)}
@@ -96,6 +98,7 @@ export function InputNotification({
 					Position={new UDim2(0, 0, 0, rem(40))}
 					BackgroundColor3={Color3.fromRGB(36, 36, 36)}
 					BorderSizePixel={0}
+					ZIndex={15}
 				>
 					<textbox
 						ref={inputTextbox}
@@ -103,6 +106,7 @@ export function InputNotification({
 						BackgroundTransparency={1}
 						TextColor3={new Color3(1, 1, 1)}
 						PlaceholderColor3={Color3.fromRGB(110, 110, 110)}
+						ZIndex={15}
 						PlaceholderText={placeholder}
 						Text={inputValue.map(tostring)}
 						TextXAlignment={Enum.TextXAlignment.Left}
@@ -121,6 +125,7 @@ export function InputNotification({
 						<textlabel
 							Text={inputValue.map((value) => `Please enter a valid ${label.lower()}.`)}
 							Position={new UDim2(0, 0, 0, rem(64))}
+							ZIndex={15}
 							Size={new UDim2(1, 0, 0, rem(14))}
 							TextSize={rem(9)}
 							TextColor3={new Color3(1, 1, 1)}
@@ -140,6 +145,7 @@ export function InputNotification({
 							TextColor3={new Color3(1, 1, 1)}
 							BackgroundTransparency={1}
 							Font={Enum.Font.GothamMedium}
+							ZIndex={15}
 							TextXAlignment={Enum.TextXAlignment.Left}
 							Visible={inputValue.map((value) => value !== "")}
 							TextWrapped
@@ -165,6 +171,7 @@ export function InputNotification({
 							TextXAlignment={Enum.TextXAlignment.Left}
 							Visible={inputValue.map((value) => value !== "")}
 							TextWrapped
+							ZIndex={15}
 							RichText
 						/>
 						<textlabel
@@ -178,6 +185,7 @@ export function InputNotification({
 							TextXAlignment={Enum.TextXAlignment.Left}
 							Visible={inputValue.map((value) => value !== "")}
 							TextWrapped
+							ZIndex={15}
 							RichText
 						/>
 					</>
@@ -187,6 +195,7 @@ export function InputNotification({
 			<frame
 				Size={new UDim2(1, 0, 0, rem(26))}
 				Position={heightEnum.map((x) => new UDim2(0, 0, 0, x === 0 ? rem(70) : x === 1 ? rem(89) : rem(111)))}
+				ZIndex={15}
 				BackgroundTransparency={1}
 			>
 				<OptionsContainer options={options} />

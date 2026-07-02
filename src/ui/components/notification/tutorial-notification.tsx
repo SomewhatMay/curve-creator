@@ -68,6 +68,7 @@ export function TutorialNotification({ message, displayCode = false, options }: 
 				TextColor3={new Color3(1, 1, 1)}
 				TextWrapped
 				RichText
+				ZIndex={15}
 			/>
 			{displayCode && (
 				<frame
@@ -76,6 +77,7 @@ export function TutorialNotification({ message, displayCode = false, options }: 
 					BackgroundColor3={Color3.fromRGB(36, 36, 36)}
 					BorderSizePixel={0}
 					key={"CodeFrame"}
+					ZIndex={15}
 				>
 					<textlabel
 						Size={new UDim2(1, 0, 1, 0)}
@@ -87,7 +89,7 @@ export function TutorialNotification({ message, displayCode = false, options }: 
 						TextXAlignment={Enum.TextXAlignment.Left}
 						RichText
 						TextWrapped
-						ZIndex={6}
+						ZIndex={15 + 6}
 					/>
 					<FullPadding paddingX={new UDim(0, rem(4))} />
 					<Rounded cornerRadius={new UDim(0, rem(4))} />
@@ -107,7 +109,7 @@ export function TutorialNotification({ message, displayCode = false, options }: 
 						TextXAlignment={Enum.TextXAlignment.Left}
 						TextEditable={false}
 						ClearTextOnFocus={false}
-						ZIndex={5}
+						ZIndex={16 + 5}
 						RichText
 						TextWrapped
 					/>
@@ -118,6 +120,7 @@ export function TutorialNotification({ message, displayCode = false, options }: 
 				Size={new UDim2(1, 0, 0, rem(26))}
 				Position={new UDim2(0, 0, 0, overallHeight + rem(16))}
 				BackgroundTransparency={1}
+				ZIndex={15}
 			>
 				<OptionsContainer options={options} />
 			</frame>

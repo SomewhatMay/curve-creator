@@ -17,7 +17,7 @@ export function OptionsContainer({ options }: props) {
 	const rem = useRem();
 
 	return (
-		<frame key="OptionsContainer" Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={1}>
+		<frame key="OptionsContainer" Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={1} ZIndex={15}>
 			{options.map((option, i) => (
 				<textbutton
 					key={i}
@@ -28,6 +28,7 @@ export function OptionsContainer({ options }: props) {
 					TextColor3={new Color3(1, 1, 1)}
 					BackgroundColor3={option.BackgroundColor3 ?? Color3.fromRGB(35, 35, 35)}
 					Event={{ MouseButton1Click: option.handler }}
+					ZIndex={15}
 				>
 					<Rounded />
 				</textbutton>

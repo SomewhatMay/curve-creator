@@ -38,11 +38,13 @@ export function Notification({ message, options }: NotificationProps) {
 				TextColor3={new Color3(1, 1, 1)}
 				TextWrapped
 				RichText
+				ZIndex={15}
 			/>
 			<frame
 				Size={new UDim2(1, 0, 0, rem(26))}
 				Position={messageHeight.map((height) => new UDim2(0, 0, 0, height + rem(16)))}
 				BackgroundTransparency={1}
+				ZIndex={15}
 			>
 				<OptionsContainer options={options} />
 			</frame>
